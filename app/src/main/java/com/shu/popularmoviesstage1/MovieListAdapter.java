@@ -15,6 +15,7 @@ import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
+    // constants
     private static final String TAG = "MovieListAdapter";
     final String MOVIE_DB_PATH = "https://image.tmdb.org/t/p/w185";
 
@@ -23,7 +24,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     public MovieListAdapter(List<MovieData> data) {
         this.movieDataList = data;
-        Log.d(TAG, "Count" + movieDataList.size());
     }
 
     @NonNull
@@ -37,8 +37,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-
-        Log.d(TAG, "onBindViewHolder: ");
         holder.bind(position);
     }
 
@@ -66,7 +64,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
                     .centerInside()
                     .into(iv);
         }
-
 
     }
 }
