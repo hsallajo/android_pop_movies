@@ -16,6 +16,8 @@ import java.util.List;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
     private static final String TAG = "MovieListAdapter";
+    final String MOVIE_DB_PATH = "https://image.tmdb.org/t/p/w185";
+
     // members
     private List<MovieData> movieDataList;
 
@@ -47,7 +49,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     public class MovieViewHolder extends ViewHolder {
 
-        final String test_path = "https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg";
         ImageView iv;
 
         public MovieViewHolder(View itemView) {
@@ -57,8 +58,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         }
 
         public void bind(int position){
+
+            String path = MOVIE_DB_PATH + movieDataList.get(position).getPoste_path();
+            Log.d(TAG, "bind: path is " + path);
             Picasso.with(iv.getContext())
-                    .load(test_path).fit()
+                    .load(path).fit()
                     .centerInside()
                     .into(iv);
         }

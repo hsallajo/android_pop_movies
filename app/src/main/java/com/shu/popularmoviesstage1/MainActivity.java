@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
         recyclerView.setLayoutManager(layoutManager);
 
-        movieDataList = JsonUtils.extractMovieData("");
+        movieDataList = JsonUtils.extractMovieData(Model.JSON_STR_MOVIES);
         movieListAdapter = new MovieListAdapter(movieDataList);
         recyclerView.setAdapter(movieListAdapter);
 
