@@ -21,11 +21,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     // members
     private List<MovieData> movieDataList;
+    private MovieListClickListener uiClickListener;
 
-    public MovieListAdapter(List<MovieData> data) {
+
+    // constructors
+    public MovieListAdapter(List<MovieData> data, MovieListClickListener uiClickListener) {
         this.movieDataList = data;
+        this.uiClickListener = uiClickListener;
     }
 
+    // overrides and callbacks
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,7 +50,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return movieDataList.size();
     }
 
-    public class MovieViewHolder extends ViewHolder {
+    public class MovieViewHolder extends ViewHolder implements View.OnClickListener {
 
         ImageView iv;
 
@@ -53,6 +58,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             super(itemView);
 
             iv = (ImageView) itemView;
+            iv.setOnClickListener(this);
         }
 
         public void bind(int position){
@@ -65,5 +71,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
                     .into(iv);
         }
 
+        @Override
+        public void onClick(View v) {
+            uiClickListener.onMovieListItemClick(getAdapterPosition());
+        }
+    }
+
+    // interfaces
+    public interface MovieListClickListener{
+        public void onMovieListItemClick(int position);
     }
 }

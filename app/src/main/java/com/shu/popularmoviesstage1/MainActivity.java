@@ -4,11 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener{
 
     private final static int NUM_OF_COLUMNS = 3;
 
@@ -32,11 +33,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         movieDataList = JsonUtils.extractMovieData(Model.JSON_STR_MOVIES);
-        movieListAdapter = new MovieListAdapter(movieDataList);
+        movieListAdapter = new MovieListAdapter(movieDataList, this);
         recyclerView.setAdapter(movieListAdapter);
 
 
 
 
+    }
+
+    @Override
+    public void onMovieListItemClick(int position) {
+        Toast.makeText(this, "Clicked " + String.valueOf(position),Toast.LENGTH_LONG).show();
     }
 }
