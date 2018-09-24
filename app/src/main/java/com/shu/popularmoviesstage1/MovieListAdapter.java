@@ -3,21 +3,25 @@ package com.shu.popularmoviesstage1;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
+    private static final String TAG = "MovieListAdapter";
     // members
     private List<MovieData> movieDataList;
 
     public MovieListAdapter(List<MovieData> data) {
         this.movieDataList = data;
+        Log.d(TAG, "Count" + movieDataList.size());
     }
 
     @NonNull
@@ -32,7 +36,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
 
-
+        Log.d(TAG, "onBindViewHolder: ");
+        holder.bind(position);
     }
 
     @Override
@@ -41,12 +46,23 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
     public class MovieViewHolder extends ViewHolder {
-        ImageView iv_temp;
+
+        final String test_path = "https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg";
+        ImageView iv;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
 
-            iv_temp = (ImageView) itemView;
+            iv = (ImageView) itemView;
         }
+
+        public void bind(int position){
+            Picasso.with(iv.getContext())
+                    .load(test_path).fit()
+                    .centerInside()
+                    .into(iv);
+        }
+
+
     }
 }

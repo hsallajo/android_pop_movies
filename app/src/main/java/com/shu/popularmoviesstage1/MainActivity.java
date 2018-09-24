@@ -27,13 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
 
+        //layoutManager = new GridLayoutManager(this, JsonUtils.columns(this));
         layoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
         recyclerView.setLayoutManager(layoutManager);
 
         movieDataList = JsonUtils.extractMovieData("");
-
         movieListAdapter = new MovieListAdapter(movieDataList);
         recyclerView.setAdapter(movieListAdapter);
+
+
+
 
     }
 }

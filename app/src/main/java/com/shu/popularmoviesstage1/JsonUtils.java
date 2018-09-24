@@ -1,5 +1,8 @@
 package com.shu.popularmoviesstage1;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,5 +76,12 @@ public class JsonUtils {
         list.add(d);
 
         return list;
+    }
+
+
+    public static int display_width(Context context) {
+        float width = context.getResources().getDisplayMetrics().widthPixels
+                / context.getResources().getDisplayMetrics().density;
+        return (int) width;
     }
 }
