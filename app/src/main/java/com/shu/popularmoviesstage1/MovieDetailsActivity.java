@@ -11,6 +11,9 @@ import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIES_MOVIE_DETAILS;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
+    // constants
+    public static final String TAG = MovieDetailsActivity.class.getSimpleName();
+
     MovieData data = null;
 
     @Override

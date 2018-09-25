@@ -20,13 +20,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     final String MOVIE_DB_PATH = "https://image.tmdb.org/t/p/w185";
 
     // members
-    private List<MovieData> movieDataList;
+    private List<MovieData> movieData;
     private MovieListClickListener uiClickListener;
 
 
     // constructors
     public MovieListAdapter(List<MovieData> data, MovieListClickListener uiClickListener) {
-        this.movieDataList = data;
+        this.movieData = data;
         this.uiClickListener = uiClickListener;
     }
 
@@ -34,6 +34,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder: ");
         LayoutInflater i = LayoutInflater.from(parent.getContext());
         View v = i.inflate(R.layout.movie_list_item, parent, false);
         MovieViewHolder holder = new MovieViewHolder(v);
@@ -47,7 +48,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public int getItemCount() {
-        return movieDataList.size();
+        Log.d(TAG, "getItemCount: " + movieData.size());
+        return movieData.size();
+    }
+
+    public void refreshData(List<MovieData> newData){
+        if(newData == null || newData.isEmpty())
+            return;
+        if(!movieData.isEmpty()){
+            movieData.clear();
+        }
+        movieData.addAll(newData);
+        this.notifyDataSetChanged();
     }
 
     public class MovieViewHolder extends ViewHolder implements View.OnClickListener {
@@ -63,7 +75,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         public void bind(int position){
 
-            String path = MOVIE_DB_PATH + movieDataList.get(position).getPoste_path();
+            String path = MOVIE_DB_PATH + movieData.get(position).getPoste_path();
             Log.d(TAG, "bind: path is " + path);
             Picasso.with(iv.getContext())
                     .load(path).fit()
