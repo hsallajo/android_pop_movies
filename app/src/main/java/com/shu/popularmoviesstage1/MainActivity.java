@@ -1,10 +1,15 @@
 package com.shu.popularmoviesstage1;
 
+import android.content.Intent;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +17,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener{
 
     private final static int NUM_OF_COLUMNS = 3;
+    public static final String POP_MOVIES_MOVIE_DETAILS = "MOVIE_DETAILS";
 
     private RecyclerView recyclerView;
     private List<MovieData> movieDataList;
@@ -43,6 +49,16 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     @Override
     public void onMovieListItemClick(int position) {
-        Toast.makeText(this, "Clicked " + String.valueOf(position),Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Clicked " + String.valueOf(position),Toast.LENGTH_LONG).show();
+        Intent i = new Intent(this, MovieDetailsActivity.class);
+
+        MovieData data = null;
+        data = movieDataList.get(position);
+        if(data == null)
+            return;
+
+        i.putExtra(POP_MOVIES_MOVIE_DETAILS, Parcels.wrap(data));
+
+        startActivity(i);
     }
 }

@@ -1,24 +1,30 @@
 package com.shu.popularmoviesstage1;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
-public class MovieData {
+@Parcel
+class MovieData {
 
     // members
-    private int id;
-    private String title;
-    private int vote_count;
-    private boolean video;
-    private double vote_average;
-    private double popularity;
-    private String poste_path;
-    private String original_language;
-    private String original_title;
-    private List<Integer> genre_ids;
-    private String backdrop_path;
-    private boolean adult;
-    private String overview;
-    private String release_date;
+    int id;
+    String title;
+    int vote_count;
+    boolean video;
+    double vote_average;
+    double popularity;
+    String poste_path;
+    String original_language;
+    String original_title;
+    List<Integer> genre_ids;
+    String backdrop_path;
+    boolean adult;
+    String overview;
+    String release_date;
+
+    public MovieData() {
+    }
 
     public MovieData(int id
             , String title
