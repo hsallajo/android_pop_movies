@@ -25,7 +25,6 @@ import java.util.List;
 public class JsonUtils {
 
     // constants
-    //public static final String QUERY = "https://api.themoviedb.org/3/movie/popular?api_key=461211e84e4eae51a2c0b938ee2c169c&language=en-US&sort_by=popularity.desc&include_video=false&page=3";
     final static String TAG = JsonUtils.class.getSimpleName();
     final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
     final static String QUERY_ACTION_POPULAR = "/popular";
@@ -62,8 +61,7 @@ public class JsonUtils {
             Log.d(TAG, "Error building URL.");
             return  null;
         }
-
-        Log.d(TAG, "buildRequestMoviesUrl: " + uri.toString());
+        
         return  url;
     }
     public static List<MovieData> extractMovieData(String jsonString) {
@@ -165,7 +163,6 @@ public class JsonUtils {
 
             if(connection.getResponseCode() == 200){
                 input = connection.getInputStream();
-                //String s = readFromInputStream(i);
                 jsonResponse = readFromInputStream(input);
             } else {
                 Log.e(TAG, "Error response code: " + connection.getResponseCode());

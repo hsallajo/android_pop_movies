@@ -48,18 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount: " + movieData.size());
         return movieData.size();
-    }
-
-    public void refreshData(List<MovieData> newData){
-        if(newData == null || newData.isEmpty())
-            return;
-        if(!movieData.isEmpty()){
-            movieData.clear();
-        }
-        movieData.addAll(newData);
-        this.notifyDataSetChanged();
     }
 
     public class MovieViewHolder extends ViewHolder implements View.OnClickListener {
@@ -76,7 +65,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         public void bind(int position){
 
             String path = MOVIE_DB_PATH + movieData.get(position).getPoste_path();
-            Log.d(TAG, "bind: path is " + path);
+            Log.i(TAG, "Image path: " + path);
             Picasso.with(iv.getContext())
                     .load(path).fit()
                     .centerInside()

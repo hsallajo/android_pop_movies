@@ -21,12 +21,13 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     public static final String TAG = MainActivity.class.getSimpleName();
     private static final int NUM_OF_COLUMNS = 3;
     public static final String POP_MOVIES_MOVIE_DETAILS = "MOVIE_DETAILS";
-    public static final String QUERY = "https://api.themoviedb.org/3/discover/movie?api_key=461211e84e4eae51a2c0b938ee2c169c&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=3";
 
     private RecyclerView recyclerView;
     private List<MovieData> movieData;
     private MovieListAdapter movieListAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    /** page(s) that have been previously requested */
+    private int lastPage = 0;
 
 
     @Override
@@ -45,16 +46,28 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
 
+        loadMovies();
+
+    }
+
+    private void loadMovies(){
         RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
+        int nextPage = lastPage + 1;
 
         URL query = null;
-        query = JsonUtils.buildMoviesUrl(JsonUtils.SortMovieBy.topRated, 1);
+        query = JsonUtils.buildMoviesUrl(JsonUtils.SortMovieBy.topRated, nextPage);
         task.execute(query);
 
     }
 
     @Override
     public void onMovieListItemClick(int position) {
+
+        // test
+        if(position == 15 || position == 14 || position == 13 ){
+            loadMovies();
+            return;
+        }
         Intent i = new Intent(this, MovieDetailsActivity.class);
 
         MovieData data = null;
@@ -87,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                 return;
             }
 
-            //movieData.addAll(extractedMovies);
-            movieData = extractedMovies;
-            movieListAdapter.refreshData(movieData);
+            movieData.addAll(extractedMovies);
+            movieListAdapter.notifyDataSetChanged();
+            lastPage ++;
         }
     }
 }
