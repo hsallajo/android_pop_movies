@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         recyclerView.setHasFixedSize(true);
 
-        //layoutManager = new GridLayoutManager(this, JsonUtils.columns(this));
         layoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
         recyclerView.setLayoutManager(layoutManager);
 

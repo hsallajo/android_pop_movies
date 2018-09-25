@@ -11,13 +11,12 @@ import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIES_MOVIE_DETAILS;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    MovieData movieData = null;
+    MovieData data = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        MovieData data = null;
 
         Parcelable p = getIntent().getParcelableExtra(POP_MOVIES_MOVIE_DETAILS);
 
@@ -29,7 +28,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        TextView tv_title = findViewById(R.id.movie_title);
-        tv_title.setText(movieData.getTitle());
+        //TextView tv_title = findViewById(R.id.movie_title);
+        //tv_title.setText(data.getTitle());
+        setTitle(data.getTitle());
     }
 }
