@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.parceler.Parcels;
 
@@ -68,18 +69,21 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         int itemId = item.getItemId();
 
         switch(itemId){
-            case R.id.switch_sort_order:
-            default: {
+            case R.id.switch_most_popular: {
                 // reset
                 lastPage = 0;
                 movieData.clear();
-                if (sortOrderSelection == JsonUtils.SortMovieBy.mostPopular){
-                    sortOrderSelection = JsonUtils.SortMovieBy.topRated;
-                } else {
-                    sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
-                }
+                sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
                 loadMovies(sortOrderSelection);
             }
+            case R.id.switch_most_rated: {
+                // reset
+                lastPage = 0;
+                movieData.clear();
+                sortOrderSelection = JsonUtils.SortMovieBy.topRated;
+                loadMovies(sortOrderSelection);
+            }
+            default:
         }
         return super.onOptionsItemSelected(item);
     }
@@ -118,11 +122,6 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     @Override
     public void onMovieListItemClick(int position) {
 
-        // test
-        if(position == 15 || position == 14 || position == 13 ){
-            loadMovies(JsonUtils.SortMovieBy.topRated);
-            return;
-        }
         Intent i = new Intent(this, MovieDetailsActivity.class);
 
         MovieData data = null;
@@ -157,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
             movieData.addAll(extractedMovies);
             movieListAdapter.notifyDataSetChanged();
-            lastPage ++;
+            lastPage++;
         }
     }
 }

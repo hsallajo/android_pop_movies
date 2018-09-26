@@ -1,49 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".MovieDetailsActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:orientation="vertical"
-        tools:context=".MovieDetailsActivity">
+        android:background="#eaeaea"
+        android:orientation="vertical">
 
+        <!--This View group serves as a container for header section of the screen -->
         <LinearLayout
             android:id="@+id/movie_info_container_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@android:color/holo_green_dark"
+            android:paddingVertical="16dp">
 
             <TextView
-                android:id="@+id/original_name_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="8dp"
-                android:text="original name"
-                android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_textsize" />
-
-            <TextView
-                android:id="@+id/original_name"
+                android:id="@+id/movie_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:text="Avengers: Infinity War"
-                android:textSize="16sp" />
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/release_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:text="release date"
                 android:textAllCaps="true"
                 android:textSize="@dimen/list_subtitle_textsize" />
@@ -53,35 +45,63 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
                 android:text="2018-04-25"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/genre_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="8dp"
+                android:text="Genre"
+                android:textAllCaps="true"
+                android:textSize="@dimen/list_subtitle_textsize" />
+
+            <TextView
+                android:id="@+id/genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Romance, adventure, action"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
         </LinearLayout>
 
+        <!--This View serves as a visual divider between list items-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ffffff"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <!--This View group serves as a container for middle section of the screen -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="16dp">
 
             <FrameLayout
-                android:id="@+id/poster_thumbnail_container"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:paddingLeft="8dp">
 
                 <ImageView
-                    android:id="@+id/poster_thumbnail"
+                    android:id="@+id/movie_poster_thumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp" />
+                    android:layout_height="200dp"
+                    android:background="@color/colorAccent"/>
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/movie_info_container_right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/colorAccent">
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -98,7 +118,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingVertical="8dp">
 
                             <TextView
                                 android:id="@+id/User_rating_label"
@@ -110,12 +131,16 @@
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/list_subtitle_textsize" />
 
-                            <ImageView
+                            <TextView
                                 android:id="@+id/user_rating"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="46dp"
+                                android:layout_height="46dp"
                                 android:layout_gravity="center_horizontal"
-                                android:background="@mipmap/ic_launcher_round" />
+                                android:background="@drawable/rating_circle"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:textSize="18sp"
+                                android:text="8.9" />
                         </LinearLayout>
                     </FrameLayout>
 
@@ -129,26 +154,26 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingVertical="8dp">
 
                             <TextView
-                                android:id="@+id/genre_label"
+                                android:id="@+id/user_votes_label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:paddingBottom="8dp"
-                                android:text="Genre"
+                                android:text="User votes"
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/list_subtitle_textsize" />
 
                             <TextView
-                                android:id="@+id/genre"
+                                android:id="@+id/user_votes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Romance, adventure, action"
+                                android:text="1676"
                                 android:textSize="16sp"
-                                android:paddingBottom="8dp"
                                 android:paddingHorizontal="16dp"/>
                         </LinearLayout>
                     </FrameLayout>
@@ -157,8 +182,18 @@
 
         </LinearLayout>
 
+        <!--This View serves as a visual divider between list items-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ffffff"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <!--This View group serves as a container for lower section of the screen -->
+
         <FrameLayout
-            android:id="@+id/movie_info_container_bottom"
+            android:id="@+id/movie_info_container_plot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -167,7 +202,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:paddingHorizontal="8dp">
 
             <TextView
                 android:id="@+id/movie_plot_label"
@@ -189,5 +226,39 @@
             </LinearLayout>
         </FrameLayout>
 
+        <!--This View serves as a visual divider between list items-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ffffff"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <!--This View group serves as a container for bottom section of the screen -->
+        <FrameLayout
+            android:id="@+id/movie_info_container_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingVertical="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingBottom="8dp"
+                    android:text="Trailers or something"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/list_subtitle_textsize" />
+            </LinearLayout>
+        </FrameLayout>
+
+
     </LinearLayout>
+
 </ScrollView>

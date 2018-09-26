@@ -3,9 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item
-        android:id="@+id/switch_sort_order"
-        android:title="Switch sort order"
-        android:orderInCategory="1">
-    </item>
+    <group app:showAsAction="ifRoom">
+        <item
+            android:id="@+id/switch_most_popular"
+            android:title="Popular"
+            android:orderInCategory="2"
+            app:showAsAction="ifRoom">
+        </item>
+        <item
+            android:id="@+id/switch_most_rated"
+            android:title="Top rated"
+            android:orderInCategory="3"
+            app:showAsAction="ifRoom">
+        </item>
+    </group>
 </menu>
