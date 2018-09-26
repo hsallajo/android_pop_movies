@@ -17,7 +17,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     // constants
     private static final String TAG = "MovieListAdapter";
-    final String MOVIE_DB_PATH = "https://image.tmdb.org/t/p/w185";
 
     // members
     private List<MovieData> movieData;
@@ -64,7 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         public void bind(int position){
 
-            String path = MOVIE_DB_PATH + movieData.get(position).getPoste_path();
+            String path = JsonUtils.MOVIE_DB_POSTER_PATH + movieData.get(position).getPoste_path();
             Log.i(TAG, "Image path: " + path);
             Picasso.with(iv.getContext())
                     .load(path).fit()

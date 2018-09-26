@@ -27,6 +27,7 @@ public class JsonUtils {
     // constants
     final static String TAG = JsonUtils.class.getSimpleName();
     final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
+    final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
     final static String QUERY_ACTION_POPULAR = "/popular";
     final static String QUERY_ACTION_TOP_RATED = "/top_rated";
     final static String MOVIE_DB_USER_API_KEY = "461211e84e4eae51a2c0b938ee2c169c";

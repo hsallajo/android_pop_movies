@@ -16,19 +16,25 @@
             android:id="@+id/row0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@android:color/holo_green_dark"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
             android:paddingVertical="16dp">
+
             <TextView
                 android:id="@+id/movie_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
                 android:paddingBottom="8dp"
                 android:text="Avengers: Infinity War"
                 android:textSize="28sp" />
+
             <TextView
-                android:id="@+id/release_date"
+                android:id="@+id/release_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -50,27 +56,6 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
-<!--
-                <TextView
-                    android:id="@+id/release_date_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="8dp"
-                    android:text="release date"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/list_subtitle_textsize" />
-
-                <TextView
-                    android:id="@+id/release_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="16dp"
-                    android:text="2018"
-                    android:textSize="20sp" />
--->
-
                 <TextView
                     android:id="@+id/genre_label"
                     android:layout_width="wrap_content"
@@ -88,6 +73,24 @@
                     android:layout_gravity="center"
                     android:paddingBottom="8dp"
                     android:text="Romance, adventure, action"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/language_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingBottom="8dp"
+                    android:text="Language"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/list_subtitle_textsize" />
+
+                <TextView
+                    android:id="@+id/languages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="en"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -107,7 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:orientation="horizontal"
-            android:paddingVertical="16dp">
+            android:paddingVertical="16dp"
+            android:paddingLeft="8dp">
 
             <FrameLayout
                 android:layout_width="0dp"
@@ -117,8 +121,7 @@
                 <ImageView
                     android:id="@+id/movie_poster_thumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/colorAccent" />
+                    android:layout_height="200dp" />
             </FrameLayout>
 
             <FrameLayout
@@ -227,8 +230,10 @@
                 android:id="@+id/movie_plot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
                 android:text="Through a series of daring escapades deep within a dark and dangerous criminal underworld, Han Solo meets his mighty future copilot Chewbacca and encounters the notorious gambler Lando Calrissian."
-                android:textSize="16sp" />
+                android:textSize="14sp"
+                android:gravity="fill_horizontal" />
         </LinearLayout>
 
         <!--This View serves as a visual divider between list items-->
@@ -253,10 +258,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingBottom="8dp"
-                android:text="Trailers or something"
+                android:paddingBottom="16dp"
+                android:text="More"
                 android:textAllCaps="true"
                 android:textSize="@dimen/list_subtitle_textsize" />
+
+            <TextView
+                android:id="@+id/original_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingBottom="8dp"
+                android:text="original name"
+                android:textAllCaps="true"
+                android:textSize="@dimen/list_subtitle_textsize" />
+
+            <TextView
+                android:id="@+id/original_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="Avengers: Infinity War"
+                android:paddingBottom="8dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/release_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:paddingBottom="8dp"
+                android:text="release date"
+                android:textAllCaps="true"
+                android:textSize="@dimen/list_subtitle_textsize" />
+
+            <TextView
+                android:id="@+id/release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="2018-09-09"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
     </LinearLayout>

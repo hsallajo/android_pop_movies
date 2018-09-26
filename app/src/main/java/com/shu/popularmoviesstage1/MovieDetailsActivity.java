@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
@@ -44,8 +46,24 @@ public class MovieDetailsActivity extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.movie_title);
         tvTitle.setText(movieData.title);
 
+        ImageView iv = findViewById(R.id.movie_poster_thumbnail);
+        String path = JsonUtils.MOVIE_DB_POSTER_PATH + movieData.poste_path;
+        Picasso.with(this)
+                .load(path).fit()
+                .centerInside()
+                .into(iv);
+
+        TextView tvOriginalName= findViewById(R.id.original_name);
+        tvOriginalName.setText(movieData.original_title);
+
+        TextView tvLanguage= findViewById(R.id.languages);
+        tvLanguage.setText(movieData.original_language);
+
+        TextView tvReleaseYear = findViewById(R.id.release_year);
+        tvReleaseYear.setText(movieData.release_date.substring(0,4));
+
         TextView tvReleaseDate = findViewById(R.id.release_date);
-        tvReleaseDate.setText(movieData.release_date.substring(0,4));
+        tvReleaseDate.setText(movieData.release_date);
 
         TextView tvGenres = findViewById(R.id.genre);
         StringBuilder s = new StringBuilder();
@@ -66,8 +84,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         TextView tvUserVotes = findViewById(R.id.user_votes);
         tvUserVotes.setText(String.valueOf(movieData.vote_count));
-
-        ImageView iv = findViewById(R.id.movie_poster_thumbnail);
 
         TextView tvPlot = findViewById(R.id.movie_plot);
         tvPlot.setText(movieData.overview);
