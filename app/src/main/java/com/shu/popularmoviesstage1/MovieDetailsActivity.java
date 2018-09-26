@@ -45,7 +45,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvTitle.setText(movieData.title);
 
         TextView tvReleaseDate = findViewById(R.id.release_date);
-        tvReleaseDate.setText(movieData.release_date);
+        tvReleaseDate.setText(movieData.release_date.substring(0,4));
 
         TextView tvGenres = findViewById(R.id.genre);
         StringBuilder s = new StringBuilder();
