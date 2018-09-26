@@ -37,6 +37,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return;
         }
 
+        setTitle(getString(R.string.title_movie_details));
+
         populateMovieDetailsView();
 
     }
