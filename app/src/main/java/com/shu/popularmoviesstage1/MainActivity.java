@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import org.parceler.Parcels;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     private RecyclerView.LayoutManager layoutManager;
     /** page(s) that have been previously requested */
     private int lastPage = 0;
+    private JsonUtils.SortMovieBy sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
 
 
     @Override
@@ -48,8 +50,41 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
 
-        loadMovies();
+        loadMovies(sortOrderSelection);
 
+        addEndlessScrolling();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater i = getMenuInflater();
+        i.inflate(R.menu.pop_movies_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch(itemId){
+            case R.id.switch_sort_order:
+            default: {
+                // reset
+                lastPage = 0;
+                movieData.clear();
+                if (sortOrderSelection == JsonUtils.SortMovieBy.mostPopular){
+                    sortOrderSelection = JsonUtils.SortMovieBy.topRated;
+                } else {
+                    sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
+                }
+                loadMovies(sortOrderSelection);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void addEndlessScrolling(){
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -62,20 +97,19 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                     if ( (positionOfFirstVisibleView
                             + numVisibleViews)/numTotalViews > 0.67 ){
                         // load a new set (page) of views.
-                        loadMovies();
+                        loadMovies(JsonUtils.SortMovieBy.topRated);
                     }
                 }
             }
         });
-
     }
 
-    private void loadMovies(){
+    private void loadMovies(JsonUtils.SortMovieBy sortMovieBy){
         RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
         int nextPage = lastPage + 1;
 
         URL query = null;
-        query = JsonUtils.buildMoviesUrl(JsonUtils.SortMovieBy.topRated, nextPage);
+        query = JsonUtils.buildMoviesUrl(sortMovieBy, nextPage);
         task.execute(query);
 
     }
@@ -86,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         // test
         if(position == 15 || position == 14 || position == 13 ){
-            loadMovies();
+            loadMovies(JsonUtils.SortMovieBy.topRated);
             return;
         }
         Intent i = new Intent(this, MovieDetailsActivity.class);
