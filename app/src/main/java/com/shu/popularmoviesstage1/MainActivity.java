@@ -2,11 +2,13 @@ package com.shu.popularmoviesstage1;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
@@ -48,6 +50,24 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         loadMovies();
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if( dy > 0 ){
+                    int numVisibleViews = layoutManager.getChildCount();
+                    int numTotalViews = layoutManager.getItemCount();
+                    int positionOfFirstVisibleView = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
+
+                    // if user is scrolling down, estimate if ~2/3 of loaded views have been passed.
+                    if ( (positionOfFirstVisibleView
+                            + numVisibleViews)/numTotalViews > 0.67 ){
+                        // load a new set (page) of views.
+                        loadMovies();
+                    }
+                }
+            }
+        });
+
     }
 
     private void loadMovies(){
@@ -59,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         task.execute(query);
 
     }
+
 
     @Override
     public void onMovieListItemClick(int position) {
