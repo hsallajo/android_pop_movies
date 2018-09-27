@@ -88,7 +88,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         TextView tvPlot = findViewById(R.id.movie_plot);
         tvPlot.setText(movieData.overview);
-
     }
 
     private int getUserRatingColor(double userRating) {

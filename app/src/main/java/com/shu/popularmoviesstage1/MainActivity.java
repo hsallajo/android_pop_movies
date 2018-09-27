@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     public static final String TAG = MainActivity.class.getSimpleName();
     private static final int NUM_OF_COLUMNS = 3;
     public static final String POP_MOVIES_MOVIE_DETAILS = "MOVIE_DETAILS";
+    /** Constant used to estimate if ~2/3 of loaded views have been passed.*/
+    public static final double CONST_TH_LOAD_NEW_MOVIES = 0.67;
 
     private RecyclerView recyclerView;
     private List<MovieData> movieData;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: ");
+        //Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.rc_movies);
@@ -61,31 +63,31 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause: ");
+        //Log.d(TAG, "onPause: ");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
+        //Log.d(TAG, "onResume: ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
+        //Log.d(TAG, "onDestroy: ");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop: ");
+        //Log.d(TAG, "onStop: ");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
+        //Log.d(TAG, "onStart: ");
     }
 
     @Override
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     }
 
     private void resetMovieData(){
-        Log.i(TAG, "resetting data");
+        // Log.i(TAG, "reset data");
         // reset
         lastPage = 0;
         movieData.clear();
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
                     // if user is scrolling down, estimate if ~2/3 of loaded views have been passed.
                     if ( (positionOfFirstVisibleView
-                            + numVisibleViews)/numTotalViews > 0.67 ){
+                            + numVisibleViews)/numTotalViews > CONST_TH_LOAD_NEW_MOVIES){
                         // load a new set (page) of views.
                         loadMovies(JsonUtilities.SortMovieBy.topRated);
                     }
@@ -154,6 +156,12 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         lastPage++;
         query = JsonUtilities.buildMoviesUrl(sortMovieBy, lastPage);
+        if(query == null){
+            Log.i(TAG, "Invalid query string");
+            Toast.makeText(this, "Invalid query string", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         task.execute(query);
     }
 
@@ -189,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
             extractedMovies = JsonUtilities.extractMovieData(queryResult);
             if (extractedMovies.isEmpty() || extractedMovies == null) {
-                Log.d(TAG, "Query result is null.");
+                //Log.d(TAG, "Query result is null.");
                 return;
             }
 
