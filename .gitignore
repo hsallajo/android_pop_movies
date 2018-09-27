@@ -5,12 +5,10 @@
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/caches
-.idea/caches/build_file_checksums.ser
-/.idea/codeStyles
 /.idea/
 .DS_Store
-/build
-/config
+build/
+config/
 /captures
-/src/main/java/com/shu/popularmoviesstage/dbconfig.java
+dbconfig.java
 .externalNativeBuild
