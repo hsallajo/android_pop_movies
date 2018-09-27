@@ -1,6 +1,9 @@
 package com.shu.popularmoviesstage1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -151,14 +154,20 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     }
 
     private void loadMovies(JsonUtilities.SortMovieBy sortMovieBy){
+
+        if(!isOnline()){
+            Toast.makeText(this, R.string.err_msg_no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
         URL query = null;
 
         lastPage++;
         query = JsonUtilities.buildMoviesUrl(sortMovieBy, lastPage);
         if(query == null){
-            Log.i(TAG, "Invalid query string");
-            Toast.makeText(this, "Invalid query string", Toast.LENGTH_LONG).show();
+            Log.i(TAG, getString(R.string.err_msg_invalid_query));
+            Toast.makeText(this, getString(R.string.err_msg_invalid_query), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -181,19 +190,30 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         startActivity(i);
     }
 
+    public boolean isOnline() {
+        ConnectivityManager c =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = c.getActiveNetworkInfo();
+
+        if(info == null)
+            return false;
+        if(!info.isConnectedOrConnecting())
+            return false;
+        else
+            return info.isConnected();
+    }
+
     class RequestMoviesAsyncTask extends AsyncTask<URL, Void, String> {
 
         @Override
         protected String doInBackground(URL... urls) {
-            Log.d(TAG, "doInBackground: ");
             return JsonUtilities.makeNetworkRequest(urls[0]);
         }
 
         @Override
         protected void onPostExecute(String queryResult) {
-            Log.d(TAG, "onPostExecute: " + queryResult);
+            //Log.i(TAG, "Query result: " + queryResult);
             List<MovieData> extractedMovies = null;
-
 
             extractedMovies = JsonUtilities.extractMovieData(queryResult);
             if (extractedMovies.isEmpty() || extractedMovies == null) {
