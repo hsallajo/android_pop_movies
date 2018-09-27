@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.rc_movies);

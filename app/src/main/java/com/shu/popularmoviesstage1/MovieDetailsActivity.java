@@ -1,6 +1,8 @@
 package com.shu.popularmoviesstage1;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -9,7 +11,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.util.Iterator;
 
@@ -83,6 +84,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         TextView tvUserRating = findViewById(R.id.user_rating);
         tvUserRating.setText(String.valueOf(movieData.vote_average));
+        GradientDrawable bg = (GradientDrawable)tvUserRating.getBackground();
+        bg.setColor(getUserRatingColor(movieData.vote_average));
 
         TextView tvUserVotes = findViewById(R.id.user_votes);
         tvUserVotes.setText(String.valueOf(movieData.vote_count));
@@ -90,5 +93,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
         TextView tvPlot = findViewById(R.id.movie_plot);
         tvPlot.setText(movieData.overview);
 
+    }
+
+    private int getUserRatingColor(double userRating) {
+
+        int roundedVal = (int) Math.ceil(userRating);
+        int color;
+
+        switch(roundedVal){
+            case 0:
+            case 1:
+            case 2: {
+                color = R.color.rating_blue;
+                break; }
+            case 3:
+            case 4:{
+                color = R.color.rating_ocean;
+                break; }
+            case 5:
+            case 6:{
+                color = R.color.rating_sun;
+                break; }
+            case 7:
+            case 8:{
+                color = R.color.rating_orange;
+                break; }
+            case 9:
+            default:{
+                color = R.color.rating_read; }
+        }
+        return ContextCompat.getColor(this, color);
     }
 }
