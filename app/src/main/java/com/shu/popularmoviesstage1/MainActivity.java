@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     private RecyclerView.LayoutManager layoutManager;
     /** page(s) that have been previously requested */
     private int lastPage = 0;
-    private JsonUtils.SortMovieBy sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
+    private JsonUtilities.SortMovieBy sortOrderSelection = JsonUtilities.SortMovieBy.mostPopular;
 
 
     @Override
@@ -101,15 +101,15 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         switch(itemId){
             case R.id.switch_most_popular: {
-                if(sortOrderSelection == JsonUtils.SortMovieBy.mostPopular)
+                if(sortOrderSelection == JsonUtilities.SortMovieBy.mostPopular)
                     return true;
-                sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
+                sortOrderSelection = JsonUtilities.SortMovieBy.mostPopular;
                 break;
             }
             case R.id.switch_most_rated: {
-                if(sortOrderSelection == JsonUtils.SortMovieBy.topRated)
+                if(sortOrderSelection == JsonUtilities.SortMovieBy.topRated)
                     return true;
-                sortOrderSelection = JsonUtils.SortMovieBy.topRated;
+                sortOrderSelection = JsonUtilities.SortMovieBy.topRated;
                 break;
             }
             default:
@@ -141,19 +141,19 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                     if ( (positionOfFirstVisibleView
                             + numVisibleViews)/numTotalViews > 0.67 ){
                         // load a new set (page) of views.
-                        loadMovies(JsonUtils.SortMovieBy.topRated);
+                        loadMovies(JsonUtilities.SortMovieBy.topRated);
                     }
                 }
             }
         });
     }
 
-    private void loadMovies(JsonUtils.SortMovieBy sortMovieBy){
+    private void loadMovies(JsonUtilities.SortMovieBy sortMovieBy){
         RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
         URL query = null;
 
         lastPage++;
-        query = JsonUtils.buildMoviesUrl(sortMovieBy, lastPage);
+        query = JsonUtilities.buildMoviesUrl(sortMovieBy, lastPage);
         task.execute(query);
     }
 
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         @Override
         protected String doInBackground(URL... urls) {
             Log.d(TAG, "doInBackground: ");
-            return JsonUtils.makeNetworkRequest(urls[0]);
+            return JsonUtilities.makeNetworkRequest(urls[0]);
         }
 
         @Override
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             List<MovieData> extractedMovies = null;
 
 
-            extractedMovies = JsonUtils.extractMovieData(queryResult);
+            extractedMovies = JsonUtilities.extractMovieData(queryResult);
             if (extractedMovies.isEmpty() || extractedMovies == null) {
                 Log.d(TAG, "Query result is null.");
                 return;

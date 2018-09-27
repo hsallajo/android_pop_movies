@@ -63,7 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         public void bind(int position){
 
-            String path = JsonUtils.MOVIE_DB_POSTER_PATH + movieData.get(position).getPoste_path();
+            String path = JsonUtilities.MOVIE_DB_POSTER_PATH + movieData.get(position).getPoste_path();
             Log.i(TAG, "Image path: " + path);
             Picasso.with(iv.getContext())
                     .load(path).fit()

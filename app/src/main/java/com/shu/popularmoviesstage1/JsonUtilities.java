@@ -2,7 +2,6 @@ package com.shu.popularmoviesstage1;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.DisplayMetrics;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -15,22 +14,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.shu.popularmoviesstage1.DbConfig.MOVIE_DB_USER_API_KEY;
 
-public class JsonUtils {
+
+public class JsonUtilities {
 
     // constants
-    final static String TAG = JsonUtils.class.getSimpleName();
+    final static String TAG = JsonUtilities.class.getSimpleName();
     final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
     final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
     final static String QUERY_ACTION_POPULAR = "/popular";
     final static String QUERY_ACTION_TOP_RATED = "/top_rated";
-    final static String MOVIE_DB_USER_API_KEY = "461211e84e4eae51a2c0b938ee2c169c";
+
     final static String MOVIE_DB_USER_LANG = "en-US";
     final static String API_KEY_PARAM = "api_key";
     final static String LANG_PARAM = "language";

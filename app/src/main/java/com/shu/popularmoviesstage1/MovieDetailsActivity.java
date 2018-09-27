@@ -46,7 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvTitle.setText(movieData.title);
 
         ImageView iv = findViewById(R.id.movie_poster_thumbnail);
-        String path = JsonUtils.MOVIE_DB_POSTER_PATH + movieData.poste_path;
+        String path = JsonUtilities.MOVIE_DB_POSTER_PATH + movieData.poste_path;
         Picasso.with(this)
                 .load(path).fit()
                 .centerInside()
@@ -69,7 +69,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Iterator<Integer> i = movieData.genre_ids.listIterator();
         while (i.hasNext()) {
             int genreId = i.next();
-            String genreStr = JsonUtils.genre_str(genreId);
+            String genreStr = JsonUtilities.genre_str(genreId);
             if( genreStr != null) {
                 s.append(genreStr.substring(0, 1).toUpperCase() + genreStr.substring(1));
             }

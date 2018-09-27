@@ -10,5 +10,7 @@
 /.idea/
 .DS_Store
 /build
+/config
 /captures
+/src/main/java/com/shu/popularmoviesstage/dbconfig.java
 .externalNativeBuild
