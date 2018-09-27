@@ -22,60 +22,60 @@ import static com.shu.popularmoviesstage1.DbConfig.MOVIE_DB_USER_API_KEY;
 public class JsonUtilities {
 
     // constants
-    final static String TAG = JsonUtilities.class.getSimpleName();
-    final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
-    final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
-    final static String QUERY_ACTION_POPULAR = "/popular";
-    final static String QUERY_ACTION_TOP_RATED = "/top_rated";
+    private final static String TAG = JsonUtilities.class.getSimpleName();
+    private final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
+    public final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
+    private final static String QUERY_ACTION_POPULAR = "/popular";
+    private final static String QUERY_ACTION_TOP_RATED = "/top_rated";
 
-    final static String MOVIE_DB_USER_LANG = "en-US";
-    final static String API_KEY_PARAM = "api_key";
-    final static String LANG_PARAM = "language";
-    final static String PAGE_PARAM = "page";
-    final static String ERR_MSG_INVALID_JSON_STR = "Invalid json string";
-    final static String ERR_MSG_BUILDING_URL = "Error building URL.";
-    static final String ERR_MSG_CONNECTION_FAILED = "Connection failed";
-    
-    static final String JSON_KEY_RESULTS = "results";
-    static final String JSON_KEY_VOTE_CNT = "vote_count";
-    static final String JSON_KEY_ID = "id";
-    static final String JSON_KEY_VIDEO = "video";
-    static final String JSON_KEY_VOTE_AVG = "vote_average";
-    static final String JSON_KEY_TITLE = "title";
-    static final String JSON_KEY_POPULARITY = "popularity";
-    static final String JSON_KEY_POSTER_PATH = "poster_path";
-    static final String JSON_KEY_ORI_LANGUAGE = "original_language";
-    static final String JSON_KEY_ORI_TITLE = "original_title";
-    static final String JSON_KEY_GENRE_IDS = "genre_ids";
-    static final String JSON_KEY_BACKDROP_PATH = "backdrop_path";
-    static final String JSON_KEY_ADULT = "adult";
-    static final String JSON_KEY_OVERVIEW = "overview";
-    static final String JSON_KEY_REL_DATE = "release_date";
+    private final static String MOVIE_DB_USER_LANG = "en-US";
+    private final static String API_KEY_PARAM = "api_key";
+    private final static String LANG_PARAM = "language";
+    private final static String PAGE_PARAM = "page";
+    private final static String ERR_MSG_INVALID_JSON_STR = "Invalid json string";
+    private final static String ERR_MSG_BUILDING_URL = "Error building URL.";
+    private static final String ERR_MSG_CONNECTION_FAILED = "Connection failed";
 
-    static final String HTTP_REQ_GET = "GET";
-    static final int HTTP_TIMEOUT = 10000;
-    static final int HTTP_RESP_OK = 200;
-    static final String CHARSET_UTF_8 = "UTF-8";
+    private static final String JSON_KEY_RESULTS = "results";
+    private static final String JSON_KEY_VOTE_CNT = "vote_count";
+    private static final String JSON_KEY_ID = "id";
+    private static final String JSON_KEY_VIDEO = "video";
+    private static final String JSON_KEY_VOTE_AVG = "vote_average";
+    private static final String JSON_KEY_TITLE = "title";
+    private static final String JSON_KEY_POPULARITY = "popularity";
+    private static final String JSON_KEY_POSTER_PATH = "poster_path";
+    private static final String JSON_KEY_ORI_LANGUAGE = "original_language";
+    private static final String JSON_KEY_ORI_TITLE = "original_title";
+    private static final String JSON_KEY_GENRE_IDS = "genre_ids";
+    private static final String JSON_KEY_BACKDROP_PATH = "backdrop_path";
+    private static final String JSON_KEY_ADULT = "adult";
+    private static final String JSON_KEY_OVERVIEW = "overview";
+    private static final String JSON_KEY_REL_DATE = "release_date";
 
-    static final String GENRE_ACTION = "Action";
-    static final String GENRE_ADVENTURE = "Adventure";
-    static final String GENRE_ANIMATION = "Animation";
-    static final String GENRE_COMEDY = "Comedy";
-    static final String GENRE_CRIME = "Crime";
-    static final String GENRE_DOCUMENTARY = "Documentary";
-    static final String GENRE_DRAMA = "Drama";
-    static final String GENRE_FAMILY = "Family";
-    static final String GENRE_FANTASY = "Fantasy";
-    static final String GENRE_HISTORY = "History";
-    static final String GENRE_HORROR = "Horror";
-    static final String GENRE_MUSIC = "Music";
-    static final String GENRE_MYSTERY = "Mystery";
-    static final String GENRE_ROMANCE = "Romance";
-    static final String GENRE_SCIENCE_FICTION = "Science Fiction";
-    static final String GENRE_TV_MOVIE = "TV Movie";
-    static final String GENRE_THRILLER = "Thriller";
-    static final String GENRE_WAR = "War";
-    static final String GENRE_WESTERN = "Western";
+    private static final String HTTP_REQ_GET = "GET";
+    private static final int HTTP_TIMEOUT = 10000;
+    private static final int HTTP_RESP_OK = 200;
+    private static final String CHARSET_UTF_8 = "UTF-8";
+
+    private static final String GENRE_ACTION = "Action";
+    private static final String GENRE_ADVENTURE = "Adventure";
+    private static final String GENRE_ANIMATION = "Animation";
+    private static final String GENRE_COMEDY = "Comedy";
+    private static final String GENRE_CRIME = "Crime";
+    private static final String GENRE_DOCUMENTARY = "Documentary";
+    private static final String GENRE_DRAMA = "Drama";
+    private static final String GENRE_FAMILY = "Family";
+    private static final String GENRE_FANTASY = "Fantasy";
+    private static final String GENRE_HISTORY = "History";
+    private static final String GENRE_HORROR = "Horror";
+    private static final String GENRE_MUSIC = "Music";
+    private static final String GENRE_MYSTERY = "Mystery";
+    private static final String GENRE_ROMANCE = "Romance";
+    private static final String GENRE_SCIENCE_FICTION = "Science Fiction";
+    private static final String GENRE_TV_MOVIE = "TV Movie";
+    private static final String GENRE_THRILLER = "Thriller";
+    private static final String GENRE_WAR = "War";
+    private static final String GENRE_WESTERN = "Western";
 
     enum SortMovieBy {
         mostPopular,
@@ -84,14 +84,14 @@ public class JsonUtilities {
 
 
     public static URL buildMoviesUrl(SortMovieBy sortParam, int page) {
-        String s = null;
+        String s;
 
         if (sortParam == SortMovieBy.mostPopular)
             s = MOVIE_DB_BASE_URL + QUERY_ACTION_POPULAR;
         else
             s = MOVIE_DB_BASE_URL + QUERY_ACTION_TOP_RATED;
 
-        if(MOVIE_DB_USER_API_KEY == "")
+        if(MOVIE_DB_USER_API_KEY.equals(""))
             return null;
 
         Uri uri = Uri.parse(s).buildUpon()
@@ -100,7 +100,7 @@ public class JsonUtilities {
                 .appendQueryParameter(PAGE_PARAM, Integer.toString(page))
                 .build();
 
-        URL url = null;
+        URL url;
         try {
             url = new URL(uri.toString());
         } catch (MalformedURLException e) {
@@ -115,10 +115,10 @@ public class JsonUtilities {
 
     public static List<MovieData> extractMovieData(String jsonString) {
         JSONObject jsonObject;
-        List<MovieData> list = new ArrayList<MovieData>();
+        List<MovieData> list = new ArrayList<>();
 
         try {
-            if (jsonString != null || jsonString.length() != 0) {
+            if (jsonString != null) {
                 jsonObject = new JSONObject(jsonString);
             }
             else {
@@ -163,7 +163,7 @@ public class JsonUtilities {
             String overview = o.optString(JSON_KEY_OVERVIEW);
             String releaseDate = o.optString(JSON_KEY_REL_DATE);
 
-            if (title == "" || overview == "" || releaseDate == "") {
+            if (title.equals("") || overview.equals("") || releaseDate.equals("")) {
                 Log.d(TAG, ERR_MSG_INVALID_JSON_STR);
                 return null;
             }
@@ -200,9 +200,9 @@ public class JsonUtilities {
         String jsonResponse = null;
 
         if (url == null)
-            return jsonResponse;
+            return null;
 
-        HttpURLConnection connection = null;
+        HttpURLConnection connection;
         InputStream input = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
@@ -223,7 +223,7 @@ public class JsonUtilities {
             } else {
                 Log.d(TAG, "Connection error: " + connection.getResponseCode());
                 return null;
-            };
+            }
         } catch (IOException e) {
             Log.d(TAG, "Problem retrieving movie results. " + e);
         } finally {
@@ -318,4 +318,4 @@ public class JsonUtilities {
                 return null;
         }
     }
-};
+}

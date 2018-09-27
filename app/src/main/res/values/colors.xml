@@ -2,31 +2,11 @@
 <resources>
     <color name="colorPrimary">#117D91</color>
     <color name="colorPrimaryDark">#1D3E44</color>
-<!--    <color name="colorAccent">#17A9C4</color>-->
     <color name="colorAccent">#56BBCE</color>
 
-    <!-- Color for an earthquake with magnitude 0 and 2 -->
-    <color name="rating_blue">#4A7BA7</color>
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 2 and 3 -->
-    <color name="rating_ocean">#04B4B3</color>
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 3 and 4 -->
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 4 and 5 -->
-    <color name="rating_sun">#F5A623</color>
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 5 and 6 -->
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 6 and 7 -->
-    <color name="rating_orange">#FC6644</color>
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 7 and 8 -->
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 8 and 9 -->
-    <color name="rating_read">#E13A20</color>
-
-    <!-- Magnitude circle color for an earthquake with magnitude between 9 and 10 -->
-
-    <!-- Magnitude circle color for an earthquake with magnitude over 10 -->
+    <color name="rating_1">#4A7BA7</color>
+    <color name="rating_2">#04B4B3</color>
+    <color name="rating_3">#F5A623</color>
+    <color name="rating_4">#FC6644</color>
+    <color name="rating_5">#E13A20</color>
 </resources>

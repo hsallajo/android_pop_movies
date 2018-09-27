@@ -17,9 +17,8 @@ import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIES_MOVIE_DETAILS;
 public class MovieDetailsActivity extends AppCompatActivity {
 
     // constants
-    public static final String TAG = MovieDetailsActivity.class.getSimpleName();
-
-    MovieData movieData = null;
+    private static final String TAG = MovieDetailsActivity.class.getSimpleName();
+    private MovieData movieData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvTitle.setText(movieData.title);
 
         ImageView iv = findViewById(R.id.movie_poster_thumbnail);
-        String path = JsonUtilities.MOVIE_DB_POSTER_PATH + movieData.poste_path;
+        String path = JsonUtilities.MOVIE_DB_POSTER_PATH + movieData.poster_path;
         Picasso.with(this)
                 .load(path).fit()
                 .centerInside()
@@ -113,23 +112,23 @@ public class MovieDetailsActivity extends AppCompatActivity {
             case 0:
             case 1:
             case 2: {
-                color = R.color.rating_blue;
+                color = R.color.rating_1;
                 break; }
             case 3:
             case 4:{
-                color = R.color.rating_ocean;
+                color = R.color.rating_2;
                 break; }
             case 5:
             case 6:{
-                color = R.color.rating_sun;
+                color = R.color.rating_3;
                 break; }
             case 7:
             case 8:{
-                color = R.color.rating_orange;
+                color = R.color.rating_4;
                 break; }
             case 9:
             default:{
-                color = R.color.rating_read; }
+                color = R.color.rating_5; }
         }
         return ContextCompat.getColor(this, color);
     }

@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="16dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/movie_title"
@@ -30,7 +29,7 @@
                 android:gravity="center_horizontal"
                 android:maxLines="2"
                 android:paddingBottom="8dp"
-                android:text="Avengers: Infinity War"
+                tools:text="Avengers: Infinity War"
                 android:textSize="28sp" />
 
             <TextView
@@ -38,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="2018"
+                tools:text="2018"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -47,8 +46,10 @@
             android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:paddingVertical="16dp">
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -62,9 +63,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingBottom="8dp"
-                    android:text="Genre"
+                    android:text="@string/genre_label"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/list_subtitle_textsize" />
+                    android:textSize="@dimen/list_subtitle_text_size" />
 
                 <TextView
                     android:id="@+id/genre"
@@ -72,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingBottom="8dp"
-                    android:text="Romance, adventure, action"
+                    tools:text="Romance, adventure, action"
                     android:textSize="16sp" />
 
                 <TextView
@@ -81,16 +82,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingBottom="8dp"
-                    android:text="Language"
+                    android:text="@string/language_label"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/list_subtitle_textsize" />
+                    android:textSize="@dimen/list_subtitle_text_size" />
 
                 <TextView
                     android:id="@+id/languages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="en"
+                    tools:text="en"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -100,7 +101,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="#ffffff" />
 
         <!--This View group serves as a container for middle section of the screen -->
@@ -108,10 +110,11 @@
             android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="horizontal"
-            android:paddingVertical="16dp"
-            android:paddingLeft="8dp">
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
             <FrameLayout
                 android:layout_width="0dp"
@@ -121,7 +124,8 @@
                 <ImageView
                     android:id="@+id/movie_poster_thumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/movie_poster_image"/>
             </FrameLayout>
 
             <FrameLayout
@@ -150,9 +154,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:paddingBottom="8dp"
-                            android:text="User rating"
+                            android:text="@string/user_rating_label"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/list_subtitle_textsize" />
+                            android:textSize="@dimen/list_subtitle_text_size" />
 
                         <TextView
                             android:id="@+id/user_rating"
@@ -161,7 +165,7 @@
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/rating_circle"
                             android:gravity="center"
-                            android:text="8.9"
+                            tools:text="8.3"
                             android:textColor="@android:color/white"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -180,16 +184,16 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:paddingBottom="8dp"
-                            android:text="User votes"
+                            android:text="@string/user_votes_label"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/list_subtitle_textsize" />
+                            android:textSize="@dimen/list_subtitle_text_size" />
 
                         <TextView
                             android:id="@+id/user_votes"
                             android:layout_width="wrap_content"
                             android:layout_height="46dp"
                             android:layout_gravity="center_horizontal"
-                            android:text="1676"
+                            tools:text="1676"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -202,7 +206,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="#ffffff" />
 
         <!--This View group serves as a container for lower section of the screen -->
@@ -211,10 +216,13 @@
             android:id="@+id/row3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="vertical"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="16dp">
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/movie_plot_label"
@@ -222,16 +230,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingBottom="8dp"
-                android:text="Overview"
+                android:text="@string/movie_plot_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_textsize" />
+                android:textSize="@dimen/list_subtitle_text_size" />
 
             <TextView
                 android:id="@+id/movie_plot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:text="Through a series of daring escapades deep within a dark and dangerous criminal underworld, Han Solo meets his mighty future copilot Chewbacca and encounters the notorious gambler Lando Calrissian."
                 android:textSize="14sp"
                 android:gravity="fill_horizontal" />
         </LinearLayout>
@@ -240,7 +247,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="#ffffff" />
 
         <!--This View group serves as a container for bottom section of the screen -->
@@ -249,19 +257,22 @@
             android:id="@+id/row4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="vertical"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="16dp">
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingBottom="16dp"
-                android:text="More"
+                android:text="@string/more_details_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_textsize" />
+                android:textSize="@dimen/list_subtitle_text_size" />
 
             <TextView
                 android:id="@+id/original_name_label"
@@ -269,16 +280,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:paddingBottom="8dp"
-                android:text="original name"
+                android:text="@string/original_name_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_textsize" />
+                android:textSize="@dimen/list_subtitle_text_size" />
 
             <TextView
                 android:id="@+id/original_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="Avengers: Infinity War"
+                tools:text="Avengers: Infinity War"
                 android:paddingBottom="16dp"
                 android:textSize="16sp" />
 
@@ -288,16 +299,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:paddingBottom="8dp"
-                android:text="release date"
+                android:text="@string/release_date_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_textsize" />
+                android:textSize="@dimen/list_subtitle_text_size" />
 
             <TextView
                 android:id="@+id/release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="2018-09-09"
+                tools:text="2018-09-09"
                 android:textSize="16sp" />
 
         </LinearLayout>

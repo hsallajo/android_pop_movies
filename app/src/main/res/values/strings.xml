@@ -3,4 +3,15 @@
     <string name="title_movie_details">Movie Details</string>
     <string name="err_msg_no_network">No network</string>
     <string name="err_msg_invalid_query">Invalid query string</string>
+    <string name="movie_poster_image">Movie poster image</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top rated</string>
+    <string name="genre_label">Genre</string>
+    <string name="language_label">Language</string>
+    <string name="user_rating_label">User rating</string>
+    <string name="user_votes_label">User votes</string>
+    <string name="movie_plot_label">Overview</string>
+    <string name="original_name_label">Original name</string>
+    <string name="release_date_label">Release date</string>
+    <string name="more_details_label">More</string>
 </resources>

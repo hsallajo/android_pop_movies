@@ -25,11 +25,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener {
 
     // constants
-    public static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int NUM_OF_COLUMNS = 3;
     public static final String POP_MOVIES_MOVIE_DETAILS = "MOVIE_DETAILS";
     /** Constant used to estimate if ~2/3 of loaded views have been passed.*/
-    public static final double CONST_TH_LOAD_NEW_MOVIES = 0.67;
+    private static final double CONST_TH_LOAD_NEW_MOVIES = 0.67;
 
     private RecyclerView recyclerView;
     private List<MovieData> movieData;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         layoutManager = new GridLayoutManager(this, NUM_OF_COLUMNS);
         recyclerView.setLayoutManager(layoutManager);
 
-        movieData = new ArrayList<MovieData>();
+        movieData = new ArrayList<>();
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
 
@@ -63,35 +63,35 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     }
 
-    @Override
+/*    @Override
     protected void onPause() {
         super.onPause();
-        //Log.d(TAG, "onPause: ");
+        Log.d(TAG, "onPause: ");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //Log.d(TAG, "onResume: ");
+        Log.d(TAG, "onResume: ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //Log.d(TAG, "onDestroy: ");
+        Log.d(TAG, "onDestroy: ");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //Log.d(TAG, "onStop: ");
+        Log.d(TAG, "onStop: ");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        //Log.d(TAG, "onStart: ");
-    }
+        Log.d(TAG, "onStart: ");
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         }
 
         RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
-        URL query = null;
+        URL query;
 
         lastPage++;
         query = JsonUtilities.buildMoviesUrl(sortMovieBy, lastPage);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         Intent i = new Intent(this, MovieDetailsActivity.class);
 
-        MovieData data = null;
+        MovieData data;
         data = movieData.get(position);
         if (data == null)
             return;
@@ -190,17 +190,14 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         startActivity(i);
     }
 
-    public boolean isOnline() {
+    private boolean isOnline() {
         ConnectivityManager c =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = c.getActiveNetworkInfo();
 
         if(info == null)
             return false;
-        if(!info.isConnectedOrConnecting())
-            return false;
-        else
-            return info.isConnected();
+        return ( info.isConnectedOrConnecting() && info.isConnected() );
     }
 
     class RequestMoviesAsyncTask extends AsyncTask<URL, Void, String> {
@@ -213,10 +210,10 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         @Override
         protected void onPostExecute(String queryResult) {
             //Log.i(TAG, "Query result: " + queryResult);
-            List<MovieData> extractedMovies = null;
+            List<MovieData> extractedMovies;
 
             extractedMovies = JsonUtilities.extractMovieData(queryResult);
-            if (extractedMovies.isEmpty() || extractedMovies == null) {
+            if (extractedMovies == null || extractedMovies.isEmpty()) {
                 //Log.d(TAG, "Query result is null.");
                 return;
             }
