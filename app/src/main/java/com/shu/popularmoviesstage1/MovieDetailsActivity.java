@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
@@ -37,7 +38,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setTitle(getString(R.string.title_movie_details));
 
         populateMovieDetailsView();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Log.i(TAG, "clicked" + item.getItemId());
+        switch(item.getItemId()){
+
+            case android.R.id.home: {
+                finish();
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void populateMovieDetailsView(){
