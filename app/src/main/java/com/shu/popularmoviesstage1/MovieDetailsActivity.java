@@ -5,15 +5,12 @@ import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
-
 import org.parceler.Parcels;
-
 import java.util.Iterator;
-
 import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIES_MOVIE_DETAILS;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -33,9 +30,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movieData = Parcels.unwrap(p);
 
         if(movieData == null) {
-            // todo
-            // hide info fields, show err icon indicating midding info / link
-            return;
+            Log.d(TAG, "onCreate: movieData has null value");
+            finish();
         }
 
         setTitle(getString(R.string.title_movie_details));
