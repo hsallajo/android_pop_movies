@@ -59,6 +59,36 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater i = getMenuInflater();
         i.inflate(R.menu.pop_movies_menu, menu);
@@ -71,22 +101,31 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         switch(itemId){
             case R.id.switch_most_popular: {
-                // reset
-                lastPage = 0;
-                movieData.clear();
+                if(sortOrderSelection == JsonUtils.SortMovieBy.mostPopular)
+                    return true;
                 sortOrderSelection = JsonUtils.SortMovieBy.mostPopular;
-                loadMovies(sortOrderSelection);
+                break;
             }
             case R.id.switch_most_rated: {
-                // reset
-                lastPage = 0;
-                movieData.clear();
+                if(sortOrderSelection == JsonUtils.SortMovieBy.topRated)
+                    return true;
                 sortOrderSelection = JsonUtils.SortMovieBy.topRated;
-                loadMovies(sortOrderSelection);
+                break;
             }
             default:
         }
-        return super.onOptionsItemSelected(item);
+
+        resetMovieData();
+        loadMovies(sortOrderSelection);
+        
+        return true;
+    }
+
+    private void resetMovieData(){
+        Log.i(TAG, "resetting data");
+        // reset
+        lastPage = 0;
+        movieData.clear();
     }
 
     private void addEndlessScrolling(){
@@ -111,12 +150,11 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     private void loadMovies(JsonUtils.SortMovieBy sortMovieBy){
         RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
-        int nextPage = lastPage + 1;
-
         URL query = null;
-        query = JsonUtils.buildMoviesUrl(sortMovieBy, nextPage);
-        task.execute(query);
 
+        lastPage++;
+        query = JsonUtils.buildMoviesUrl(sortMovieBy, lastPage);
+        task.execute(query);
     }
 
 
@@ -157,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
             movieData.addAll(extractedMovies);
             movieListAdapter.notifyDataSetChanged();
-            lastPage++;
         }
     }
 }

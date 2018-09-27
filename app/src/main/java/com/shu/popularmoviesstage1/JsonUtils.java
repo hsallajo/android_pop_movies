@@ -64,6 +64,8 @@ public class JsonUtils {
             return null;
         }
 
+        Log.i(TAG, "Request url: " + url);
+
         return url;
     }
 
@@ -72,11 +74,19 @@ public class JsonUtils {
         List<MovieData> list = new ArrayList<MovieData>();
 
         try {
-            jsonObject = new JSONObject(jsonString);
+            if (jsonString != null || jsonString.length() != 0) {
+                jsonObject = new JSONObject(jsonString);
+            }
+            else {
+                Log.d(TAG, "invalid json string");
+                return null;
+            }
         } catch (JSONException e) {
             Log.d(TAG, "invalid json string");
             return null;
         }
+
+        Log.i(TAG, "json response: " + jsonString);
 
         JSONArray results = jsonObject.optJSONArray("results");
 
