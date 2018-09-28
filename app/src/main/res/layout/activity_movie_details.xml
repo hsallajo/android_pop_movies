@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffefef"
+    android:background="@color/background_light"
     tools:context=".MovieDetailsActivity">
 
     <LinearLayout
@@ -111,7 +111,8 @@
             android:layout_marginRight="8dp"
             android:orientation="horizontal"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:baselineAligned="false">
 
             <FrameLayout
                 android:layout_width="0dp"
@@ -273,7 +274,7 @@
                 android:id="@+id/original_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:paddingBottom="8dp"
                 android:text="@string/original_name_label"
                 android:textAllCaps="true"
@@ -283,7 +284,7 @@
                 android:id="@+id/original_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 tools:text="Avengers: Infinity War"
                 android:paddingBottom="16dp"
                 android:textSize="16sp" />
@@ -292,7 +293,7 @@
                 android:id="@+id/release_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:paddingBottom="8dp"
                 android:text="@string/release_date_label"
                 android:textAllCaps="true"
@@ -302,7 +303,7 @@
                 android:id="@+id/release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 tools:text="2018-09-09"
                 android:textSize="16sp" />
 

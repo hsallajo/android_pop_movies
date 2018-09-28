@@ -3,6 +3,11 @@ package com.shu.popularmoviesstage1;
 import org.parceler.Parcel;
 import java.util.List;
 
+/**
+ * Created by S. Huoponen as part of Udacity Nanodegree's
+ * project 'Popular Movies' (2018).
+ */
+
 @Parcel
 class MovieData {
 

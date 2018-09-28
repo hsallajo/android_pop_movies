@@ -10,17 +10,19 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
+/**
+ * Created by S. Huoponen as part of Udacity Nanodegree's
+ * project 'Popular Movies' (2018).
+ */
+
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
-    // constants
     // private static final String TAG = "MovieListAdapter";
 
-    // members
     private final List<MovieData> movieData;
     private final MovieListClickListener uiClickListener;
 
 
-    // constructors
     public MovieListAdapter(List<MovieData> data, MovieListClickListener uiClickListener) {
 
         this.movieData = data;
@@ -28,7 +30,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     }
 
-    // overrides and callbacks
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -79,7 +80,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         }
     }
 
-    // interfaces
     public interface MovieListClickListener {
 
         void onMovieListItemClick(int position);

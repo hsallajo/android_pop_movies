@@ -14,9 +14,14 @@ import org.parceler.Parcels;
 import java.util.Iterator;
 import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIE_DETAILS;
 
+/**
+ * Created by S. Huoponen as part of Udacity Nanodegree's
+ * project 'Popular Movies' (2018).
+ */
+
 public class MovieDetailsActivity extends AppCompatActivity {
 
-    // constants
+    // Constants
     private static final String TAG = MovieDetailsActivity.class.getSimpleName();
     private MovieData movieData = null;
 
@@ -80,12 +85,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         TextView tvGenres = findViewById(R.id.genre);
         StringBuilder s = new StringBuilder();
+
         Iterator<Integer> i = movieData.genreIds.listIterator();
         while (i.hasNext()) {
+
             int genreId = i.next();
             String genreStr = JsonUtilities.genre(genreId);
             if( genreStr != null) {
-                s.append(genreStr.substring(0, 1).toUpperCase() + genreStr.substring(1));
+                String capitalized = genreStr.substring(0, 1).toUpperCase() + genreStr.substring(1);
+                s.append(capitalized);
             }
             if( i.hasNext() )
                 s.append(", ");

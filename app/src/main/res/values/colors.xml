@@ -9,4 +9,5 @@
     <color name="rating_3">#F5A623</color>
     <color name="rating_4">#FC6644</color>
     <color name="rating_5">#E13A20</color>
+    <color name="background_light">#ffefef</color>
 </resources>

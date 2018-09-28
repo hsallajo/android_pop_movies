@@ -20,9 +20,14 @@ import java.util.List;
 
 import static com.shu.popularmoviesstage1.DbConfig.MOVIE_DB_USER_API_KEY;
 
+/**
+ * Created by S. Huoponen as part of Udacity Nanodegree's
+ * project 'Popular Movies' (2018).
+ */
 
 public class JsonUtilities {
 
+    // Constants
     private final static String TAG = JsonUtilities.class.getSimpleName();
     private final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
     public final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
@@ -78,19 +83,18 @@ public class JsonUtilities {
     private static final String GENRE_WAR = "War";
     private static final String GENRE_WESTERN = "Western";
 
-    enum SortMovieBy {
+    enum MovieSortOpt {
 
         mostPopular,
         topRated
 
     }
 
-
-    public static URL buildMoviesUrl(SortMovieBy sortParam, int page) {
+    public static URL buildMoviesUrl(MovieSortOpt sortParam, int page) {
 
         String s;
 
-        if (sortParam == SortMovieBy.mostPopular)
+        if (sortParam == MovieSortOpt.mostPopular)
             s = MOVIE_DB_BASE_URL + QUERY_ACTION_POPULAR;
         else
             s = MOVIE_DB_BASE_URL + QUERY_ACTION_TOP_RATED;
