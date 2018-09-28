@@ -24,18 +24,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener {
 
-    // constants
+    /**
+     * Constants
+     */
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int NUM_OF_COLUMNS = 3;
-    public static final String POP_MOVIES_MOVIE_DETAILS = "MOVIE_DETAILS";
-    /** Constant used to estimate if ~2/3 of loaded views have been passed.*/
+    public static final String POP_MOVIE_DETAILS = "MOVIE_DETAILS";
+    /**
+     * Constant used to estimate if ~2/3 of loaded views have been passed.
+     */
     private static final double CONST_TH_LOAD_NEW_MOVIES = 0.67;
 
     private RecyclerView recyclerView;
     private List<MovieData> movieData;
     private MovieListAdapter movieListAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    /** page(s) that have been previously requested */
+    /**
+     * page(s) that have been previously requested
+     */
     private int lastPage = 0;
     private JsonUtilities.SortMovieBy sortOrderSelection = JsonUtilities.SortMovieBy.mostPopular;
 
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
-        //Log.d(TAG, "onCreate: ");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.rc_movies);
@@ -63,99 +69,78 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     }
 
-/*    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater i = getMenuInflater();
         i.inflate(R.menu.pop_movies_menu, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int itemId = item.getItemId();
 
-        switch(itemId){
+        switch (itemId) {
+
             case R.id.switch_most_popular: {
-                if(sortOrderSelection == JsonUtilities.SortMovieBy.mostPopular)
+                if (sortOrderSelection == JsonUtilities.SortMovieBy.mostPopular)
                     return true;
                 sortOrderSelection = JsonUtilities.SortMovieBy.mostPopular;
                 break;
             }
+
             case R.id.switch_most_rated: {
-                if(sortOrderSelection == JsonUtilities.SortMovieBy.topRated)
+                if (sortOrderSelection == JsonUtilities.SortMovieBy.topRated)
                     return true;
                 sortOrderSelection = JsonUtilities.SortMovieBy.topRated;
                 break;
             }
+
             default:
         }
 
         resetMovieData();
         loadMovies(sortOrderSelection);
-        
+
         return true;
     }
 
-    private void resetMovieData(){
-        // Log.i(TAG, "reset data");
-        // reset
+    private void resetMovieData() {
+
         lastPage = 0;
         movieData.clear();
+
     }
 
-    private void addEndlessScrolling(){
+    private void addEndlessScrolling() {
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if( dy > 0 ){
+                if (dy > 0) {
+
                     int numVisibleViews = layoutManager.getChildCount();
                     int numTotalViews = layoutManager.getItemCount();
                     int positionOfFirstVisibleView = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
 
                     // if user is scrolling down, estimate if ~2/3 of loaded views have been passed.
-                    if ( (positionOfFirstVisibleView
-                            + numVisibleViews)/numTotalViews > CONST_TH_LOAD_NEW_MOVIES){
+                    if ((positionOfFirstVisibleView
+                            + numVisibleViews) / numTotalViews > CONST_TH_LOAD_NEW_MOVIES) {
                         // load a new set (page) of views.
                         loadMovies(JsonUtilities.SortMovieBy.topRated);
                     }
+
                 }
             }
         });
     }
 
-    private void loadMovies(JsonUtilities.SortMovieBy sortMovieBy){
+    private void loadMovies(JsonUtilities.SortMovieBy sortMovieBy) {
 
-        if(!isOnline()){
+        if (!isOnline()) {
             Toast.makeText(this, R.string.err_msg_no_network, Toast.LENGTH_LONG).show();
             return;
         }
@@ -165,7 +150,8 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         lastPage++;
         query = JsonUtilities.buildMoviesUrl(sortMovieBy, lastPage);
-        if(query == null){
+
+        if (query == null) {
             Log.i(TAG, getString(R.string.err_msg_invalid_query));
             Toast.makeText(this, getString(R.string.err_msg_invalid_query), Toast.LENGTH_LONG).show();
             return;
@@ -185,19 +171,23 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         if (data == null)
             return;
 
-        i.putExtra(POP_MOVIES_MOVIE_DETAILS, Parcels.wrap(data));
+        i.putExtra(POP_MOVIE_DETAILS, Parcels.wrap(data));
 
         startActivity(i);
     }
 
     private boolean isOnline() {
+
         ConnectivityManager c =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = c.getActiveNetworkInfo();
 
-        if(info == null)
+        if (info == null)
             return false;
-        return ( info.isConnectedOrConnecting() && info.isConnected() );
+
+        return (info.isConnectedOrConnecting()
+                && info.isConnected());
+
     }
 
     class RequestMoviesAsyncTask extends AsyncTask<URL, Void, String> {
@@ -209,10 +199,10 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         @Override
         protected void onPostExecute(String queryResult) {
-            //Log.i(TAG, "Query result: " + queryResult);
-            List<MovieData> extractedMovies;
 
+            List<MovieData> extractedMovies;
             extractedMovies = JsonUtilities.extractMovieData(queryResult);
+
             if (extractedMovies == null || extractedMovies.isEmpty()) {
                 //Log.d(TAG, "Query result is null.");
                 return;
@@ -220,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
             movieData.addAll(extractedMovies);
             movieListAdapter.notifyDataSetChanged();
+
         }
     }
 }

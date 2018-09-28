@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rc_movies"
-        android:background="@color/colorPrimary"
-        android:paddingTop="4dp"
+        android:background="@android:color/black"
+        android:paddingTop="1dp"
         tools:context=".MainActivity"/>
 

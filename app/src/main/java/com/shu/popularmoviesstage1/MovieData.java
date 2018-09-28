@@ -1,7 +1,6 @@
 package com.shu.popularmoviesstage1;
 
 import org.parceler.Parcel;
-
 import java.util.List;
 
 @Parcel
@@ -10,51 +9,51 @@ class MovieData {
     // members
     int id;
     String title;
-    int vote_count;
+    int voteCount;
     boolean video;
-    double vote_average;
+    double voteAverage;
     double popularity;
-    String poster_path;
-    String original_language;
-    String original_title;
-    List<Integer> genre_ids;
-    String backdrop_path;
+    String posterPath;
+    String originalLanguage;
+    String originalTitle;
+    List<Integer> genreIds;
+    String backdropPath;
     boolean adult;
     String overview;
-    String release_date;
+    String releaseDate;
 
     public MovieData() {
     }
 
     public MovieData(int id
             , String title
-            , int vote_count
+            , int voteCount
             , boolean video
-            , double vote_average
+            , double voteAverage
             , double popularity
-            , String poster_path
-            , String original_language
-            , String original_title
-            , List<Integer> genre_ids
-            , String backdrop_path
+            , String posterPath
+            , String originalLanguage
+            , String originalTitle
+            , List<Integer> genreIds
+            , String backdropPath
             , boolean adult
             , String overview
-            , String release_date
+            , String releaseDate
     ) {
         this.id = id;
         this.title = title;
-        this.vote_count = vote_count;
+        this.voteCount = voteCount;
         this.video = video;
-        this.vote_average = vote_average;
+        this.voteAverage = voteAverage;
         this.popularity = popularity;
-        this.poster_path = poster_path;
-        this.original_language = original_language;
-        this.original_title = original_title;
-        this.genre_ids = genre_ids;
-        this.backdrop_path = backdrop_path;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.genreIds = genreIds;
+        this.backdropPath = backdropPath;
         this.adult = adult;
         this.overview = overview;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
 
     }
 }

@@ -2,9 +2,11 @@ package com.shu.popularmoviesstage1;
 
 import android.net.Uri;
 import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +23,6 @@ import static com.shu.popularmoviesstage1.DbConfig.MOVIE_DB_USER_API_KEY;
 
 public class JsonUtilities {
 
-    // constants
     private final static String TAG = JsonUtilities.class.getSimpleName();
     private final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
     public final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
@@ -78,12 +79,15 @@ public class JsonUtilities {
     private static final String GENRE_WESTERN = "Western";
 
     enum SortMovieBy {
+
         mostPopular,
         topRated
+
     }
 
 
     public static URL buildMoviesUrl(SortMovieBy sortParam, int page) {
+
         String s;
 
         if (sortParam == SortMovieBy.mostPopular)
@@ -91,7 +95,7 @@ public class JsonUtilities {
         else
             s = MOVIE_DB_BASE_URL + QUERY_ACTION_TOP_RATED;
 
-        if(MOVIE_DB_USER_API_KEY.equals(""))
+        if (MOVIE_DB_USER_API_KEY.equals(""))
             return null;
 
         Uri uri = Uri.parse(s).buildUpon()
@@ -114,14 +118,14 @@ public class JsonUtilities {
     }
 
     public static List<MovieData> extractMovieData(String jsonString) {
+
         JSONObject jsonObject;
         List<MovieData> list = new ArrayList<>();
 
         try {
             if (jsonString != null) {
                 jsonObject = new JSONObject(jsonString);
-            }
-            else {
+            } else {
                 Log.d(TAG, ERR_MSG_INVALID_JSON_STR);
                 return null;
             }
@@ -134,11 +138,14 @@ public class JsonUtilities {
         JSONArray results = jsonObject.optJSONArray(JSON_KEY_RESULTS);
 
         for (int i = 0; i < results.length(); i++) {
+
             JSONObject o = results.optJSONObject(i);
+
             if (o == null) {
                 Log.d(TAG, ERR_MSG_INVALID_JSON_STR);
                 return null;
             }
+
             int voteCount = o.optInt(JSON_KEY_VOTE_CNT);
             int id = o.optInt(JSON_KEY_ID);
             boolean video = o.optBoolean(JSON_KEY_VIDEO);
@@ -154,10 +161,12 @@ public class JsonUtilities {
                 Log.d(TAG, ERR_MSG_INVALID_JSON_STR);
                 return null;
             }
+
             List<Integer> genreIds = new ArrayList<>();
             for (int j = 0; j < jsonGenreIds.length(); j++) {
                 genreIds.add(jsonGenreIds.optInt(j));
             }
+
             String backdropPath = o.optString(JSON_KEY_BACKDROP_PATH);
             boolean adult = o.optBoolean(JSON_KEY_ADULT);
             String overview = o.optString(JSON_KEY_OVERVIEW);
@@ -188,13 +197,6 @@ public class JsonUtilities {
 
         return list;
     }
-
-
-    /*public static int display_width(Context context) {
-        float width = context.getResources().getDisplayMetrics().widthPixels
-                / context.getResources().getDisplayMetrics().density;
-        return (int) width;
-    }*/
 
     public static String makeNetworkRequest(URL url) {
         String jsonResponse = null;
@@ -242,19 +244,23 @@ public class JsonUtilities {
     private static String readFromInputStream(InputStream in) throws IOException {
 
         StringBuilder builder = new StringBuilder();
+
         if (in != null) {
+
             InputStreamReader inReader = new InputStreamReader(in, Charset.forName(CHARSET_UTF_8));
             BufferedReader bReader = new BufferedReader(inReader);
             String line = bReader.readLine();
+
             while (line != null) {
                 builder.append(line);
                 line = bReader.readLine();
             }
         }
+
         return builder.toString();
     }
 
-    public static String genre_str(int id) {
+    public static String genre(int id) {
 
         switch (id) {
             case 28:
