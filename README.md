@@ -6,7 +6,7 @@ This project is part of Udacity Android Developer Nanodegree. App uses Movie Dat
 ## Getting Started
 
 - You can apply for an Movie Database API key within [Movie Database] (https://www.themoviedb.org/documentation/api). Go to your account settings page.  
-- Once you have the key, place it in popularmoviesstage1\DbConfig.java. '''MOVIE_DB_USER_API_KEY = "<API key>"'''.
+- Once you have the key, place it in popularmoviesstage1\DbConfig.java. '''MOVIE_DB_USER_API_KEY = "API key"'''.
 
 
 ## Libraries
