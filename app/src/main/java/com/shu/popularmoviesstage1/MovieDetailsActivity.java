@@ -14,11 +14,6 @@ import org.parceler.Parcels;
 import java.util.Iterator;
 import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIE_DETAILS;
 
-/**
- * Created by S. Huoponen as part of Udacity Nanodegree's
- * project 'Popular Movies' (2018).
- */
-
 public class MovieDetailsActivity extends AppCompatActivity {
 
     // Constants

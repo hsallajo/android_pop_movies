@@ -18,13 +18,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shu.popularmoviesstage1.DbConfig.MOVIE_DB_USER_API_KEY;
-
-/**
- * Created by S. Huoponen as part of Udacity Nanodegree's
- * project 'Popular Movies' (2018).
- */
-
 public class JsonUtilities {
 
     // Constants
@@ -92,6 +85,7 @@ public class JsonUtilities {
 
     public static URL buildMoviesUrl(MovieSortOpt sortParam, int page) {
 
+        String userApiKey = BuildConfig.MOVIE_DB_USER_API_KEY;
         String s;
 
         if (sortParam == MovieSortOpt.mostPopular)
@@ -99,11 +93,11 @@ public class JsonUtilities {
         else
             s = MOVIE_DB_BASE_URL + QUERY_ACTION_TOP_RATED;
 
-        if (MOVIE_DB_USER_API_KEY.equals(""))
+        if (userApiKey.equals(""))
             return null;
 
         Uri uri = Uri.parse(s).buildUpon()
-                .appendQueryParameter(API_KEY_PARAM, MOVIE_DB_USER_API_KEY)
+                .appendQueryParameter(API_KEY_PARAM, userApiKey)
                 .appendQueryParameter(LANG_PARAM, MOVIE_DB_USER_LANG)
                 .appendQueryParameter(PAGE_PARAM, Integer.toString(page))
                 .build();

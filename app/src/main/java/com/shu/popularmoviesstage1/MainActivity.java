@@ -20,11 +20,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by S. Huoponen as part of Udacity Nanodegree's
- * project 'Popular Movies' (2018).
- */
-
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener {
 
     // Constants
@@ -202,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             extractedMovies = JsonUtilities.extractMovieData(queryResult);
 
             if (extractedMovies == null || extractedMovies.isEmpty()) {
-                //Log.d(TAG, "Query result is null.");
                 return;
             }
 

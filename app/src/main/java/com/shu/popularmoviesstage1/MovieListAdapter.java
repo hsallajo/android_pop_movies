@@ -10,14 +10,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-/**
- * Created by S. Huoponen as part of Udacity Nanodegree's
- * project 'Popular Movies' (2018).
- */
-
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
-
-    // private static final String TAG = "MovieListAdapter";
 
     private final List<MovieData> movieData;
     private final MovieListClickListener uiClickListener;
