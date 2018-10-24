@@ -2,9 +2,9 @@ package com.shu.popularmoviesstage1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +15,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.shu.popularmoviesstage1.model.Movie;
+import com.shu.popularmoviesstage1.model.MovieDbAPI;
+import com.shu.popularmoviesstage1.model.MoviePage;
+import com.shu.popularmoviesstage1.utils.DataUtilities;
+
 import org.parceler.Parcels;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener {
 
@@ -31,15 +41,22 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
      */
     private static final double CONST_TH_LOAD_NEW_MOVIES = 0.67;
 
-    private List<MovieData> movieData;
+    private List<Movie> movieData;
     private int lastPage = 0;
     private RecyclerView recyclerView;
     private MovieListAdapter movieListAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private JsonUtilities.MovieSortOpt sortOrderSelection = JsonUtilities.MovieSortOpt.mostPopular;
+    private DataUtilities.MovieSortOption sortOrderSelection
+            = DataUtilities.MovieSortOption.mostPopular;
+
+    private MovieDbAPI movieDb;
+
+    private static String dbUserKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        dbUserKey = BuildConfig.MOVIE_DB_USER_API_KEY;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -53,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         movieData = new ArrayList<>();
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
+
+        movieDb = DataUtilities.getMovieDb();
 
         loadMovies(sortOrderSelection);
 
@@ -77,16 +96,16 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         switch (itemId) {
 
             case R.id.switch_most_popular: {
-                if (sortOrderSelection == JsonUtilities.MovieSortOpt.mostPopular)
+                if (sortOrderSelection == DataUtilities.MovieSortOption.mostPopular)
                     return true;
-                sortOrderSelection = JsonUtilities.MovieSortOpt.mostPopular;
+                sortOrderSelection = DataUtilities.MovieSortOption.mostPopular;
                 break;
             }
 
             case R.id.switch_most_rated: {
-                if (sortOrderSelection == JsonUtilities.MovieSortOpt.topRated)
+                if (sortOrderSelection == DataUtilities.MovieSortOption.topRated)
                     return true;
-                sortOrderSelection = JsonUtilities.MovieSortOpt.topRated;
+                sortOrderSelection = DataUtilities.MovieSortOption.topRated;
                 break;
             }
 
@@ -104,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
         Intent i = new Intent(this, MovieDetailsActivity.class);
 
-        MovieData data;
+        Movie data;
         data = movieData.get(position);
         if (data == null)
             return;
@@ -137,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                     if ((positionOfFirstVisibleView
                             + numVisibleViews) / numTotalViews > CONST_TH_LOAD_NEW_MOVIES) {
                         // load a new set (page) of views.
-                        loadMovies(JsonUtilities.MovieSortOpt.topRated);
+                        loadMovies(DataUtilities.MovieSortOption.topRated);
                     }
 
                 }
@@ -145,26 +164,34 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         });
     }
 
-    private void loadMovies(JsonUtilities.MovieSortOpt movieSortOpt) {
+    private void loadMovies(DataUtilities.MovieSortOption movieSortOpt) {
 
         if (!isOnline()) {
             Toast.makeText(this, R.string.err_msg_no_network, Toast.LENGTH_LONG).show();
             return;
         }
 
-        RequestMoviesAsyncTask task = new RequestMoviesAsyncTask();
-        URL query;
-
         lastPage++;
-        query = JsonUtilities.buildMoviesUrl(movieSortOpt, lastPage);
 
-        if (query == null) {
-            Log.i(TAG, getString(R.string.err_msg_invalid_query));
-            Toast.makeText(this, getString(R.string.err_msg_invalid_query), Toast.LENGTH_LONG).show();
-            return;
-        }
+        movieDb.loadMovies(movieSortOpt.toString(), dbUserKey, Integer.toString(lastPage))
+                .enqueue(new Callback<MoviePage>() {
+                    @Override
+                    public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
+                        if(response.isSuccessful()){
+                            updateData(response.body().getMovies());
+                        } else {
+                            Log.d(TAG, "onResponse: response.code " + response.code());
+                        }
+                    }
 
-        task.execute(query);
+                    @Override
+                    public void onFailure(Call<MoviePage> call, Throwable t) {
+                        Context c = getApplicationContext();
+                        Toast.makeText(c, getString(R.string.err_msg_invalid_query), Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onFailure: " + t);
+                    }
+                });
+
     }
 
     private boolean isOnline() {
@@ -183,26 +210,13 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
 
     }
 
-    class RequestMoviesAsyncTask extends AsyncTask<URL, Void, String> {
+    private void updateData(List<Movie> extractedMovies){
 
-        @Override
-        protected String doInBackground(URL... urls) {
-            return JsonUtilities.makeNetworkRequest(urls[0]);
+        if (extractedMovies == null || extractedMovies.isEmpty()) {
+            return;
         }
 
-        @Override
-        protected void onPostExecute(String queryResult) {
-
-            List<MovieData> extractedMovies;
-            extractedMovies = JsonUtilities.extractMovieData(queryResult);
-
-            if (extractedMovies == null || extractedMovies.isEmpty()) {
-                return;
-            }
-
-            movieData.addAll(extractedMovies);
-            movieListAdapter.notifyDataSetChanged();
-
-        }
+        movieData.addAll(extractedMovies);
+        movieListAdapter.notifyDataSetChanged();
     }
 }

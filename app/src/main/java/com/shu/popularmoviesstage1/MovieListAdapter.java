@@ -7,16 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.shu.popularmoviesstage1.model.Movie;
+import com.shu.popularmoviesstage1.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
-    private final List<MovieData> movieData;
+    private final List<Movie> movieData;
     private final MovieListClickListener uiClickListener;
 
 
-    public MovieListAdapter(List<MovieData> data, MovieListClickListener uiClickListener) {
+    public MovieListAdapter(List<Movie> data, MovieListClickListener uiClickListener) {
 
         this.movieData = data;
         this.uiClickListener = uiClickListener;
@@ -58,7 +61,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         private void bind(int position) {
 
-            String path = JsonUtilities.MOVIE_DB_POSTER_PATH + movieData.get(position).posterPath;
+            String path = DataUtilities.MOVIE_DB_POSTER_PATH + movieData.get(position).getPosterPath();
 
             Picasso.with(iv.getContext())
                     .load(path)

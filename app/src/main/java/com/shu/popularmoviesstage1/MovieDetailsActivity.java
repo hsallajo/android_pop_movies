@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.shu.popularmoviesstage1.model.Movie;
+import com.shu.popularmoviesstage1.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 import java.util.Iterator;
@@ -18,7 +21,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     // Constants
     private static final String TAG = MovieDetailsActivity.class.getSimpleName();
-    private MovieData movieData = null;
+    private Movie movieData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,35 +60,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void populateMovieDetailsView(){
 
         TextView tvTitle = findViewById(R.id.movie_title);
-        tvTitle.setText(movieData.title);
+        tvTitle.setText(movieData.getTitle());
 
         ImageView iv = findViewById(R.id.movie_poster_thumbnail);
-        String path = JsonUtilities.MOVIE_DB_POSTER_PATH + movieData.posterPath;
+        String path = DataUtilities.MOVIE_DB_POSTER_PATH + movieData.getPosterPath();
         Picasso.with(this)
                 .load(path).fit()
                 .centerInside()
                 .into(iv);
 
         TextView tvOriginalName= findViewById(R.id.original_name);
-        tvOriginalName.setText(movieData.originalTitle);
+        tvOriginalName.setText(movieData.getOriginalTitle());
 
         TextView tvLanguage= findViewById(R.id.languages);
-        tvLanguage.setText(movieData.originalLanguage);
+        tvLanguage.setText(movieData.getOriginalLanguage());
 
         TextView tvReleaseYear = findViewById(R.id.release_year);
-        tvReleaseYear.setText(movieData.releaseDate.substring(0,4));
+        tvReleaseYear.setText(movieData.getReleaseDate().substring(0,4));
 
         TextView tvReleaseDate = findViewById(R.id.release_date);
-        tvReleaseDate.setText(movieData.releaseDate);
+        tvReleaseDate.setText(movieData.getReleaseDate());
 
         TextView tvGenres = findViewById(R.id.genre);
         StringBuilder s = new StringBuilder();
 
-        Iterator<Integer> i = movieData.genreIds.listIterator();
+        Iterator<Integer> i = movieData.getGenreIds().listIterator();
         while (i.hasNext()) {
 
             int genreId = i.next();
-            String genreStr = JsonUtilities.genre(genreId);
+            String genreStr = DataUtilities.genre(genreId);
             if( genreStr != null) {
                 String capitalized = genreStr.substring(0, 1).toUpperCase() + genreStr.substring(1);
                 s.append(capitalized);
@@ -97,17 +100,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
 
         TextView tvUserRating = findViewById(R.id.user_rating);
-        tvUserRating.setText(String.valueOf(movieData.voteAverage));
+        tvUserRating.setText(String.valueOf(movieData.getVoteAverage()));
         GradientDrawable bg = (GradientDrawable)tvUserRating.getBackground();
         bg.setColor(
-                getColorForUserRating(movieData.voteAverage)
+                getColorForUserRating(movieData.getVoteAverage())
         );
 
         TextView tvUserVotes = findViewById(R.id.user_votes);
-        tvUserVotes.setText(String.valueOf(movieData.voteCount));
+        tvUserVotes.setText(String.valueOf(movieData.getVoteCount()));
 
         TextView tvPlot = findViewById(R.id.movie_plot);
-        tvPlot.setText(movieData.overview);
+        tvPlot.setText(movieData.getOverview());
     }
 
     private int getColorForUserRating(double userRating) {
