@@ -1,8 +1,7 @@
-package com.shu.popularmoviesstage1;
+package com.shu.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -16,10 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.shu.popularmoviesstage1.model.Movie;
-import com.shu.popularmoviesstage1.model.MovieDbAPI;
-import com.shu.popularmoviesstage1.model.MoviePage;
-import com.shu.popularmoviesstage1.utils.DataUtilities;
+import com.shu.popularmovies.model.Movie;
+import com.shu.popularmovies.rest.MovieDbAPI;
+import com.shu.popularmovies.model.MoviePage;
+import com.shu.popularmovies.utils.DataUtilities;
 
 import org.parceler.Parcels;
 

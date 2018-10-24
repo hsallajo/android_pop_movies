@@ -1,4 +1,4 @@
-package com.shu.popularmoviesstage1;
+package com.shu.popularmovies;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Parcelable;
@@ -10,12 +10,12 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shu.popularmoviesstage1.model.Movie;
-import com.shu.popularmoviesstage1.utils.DataUtilities;
+import com.shu.popularmovies.model.Movie;
+import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 import java.util.Iterator;
-import static com.shu.popularmoviesstage1.MainActivity.POP_MOVIE_DETAILS;
+import static com.shu.popularmovies.MainActivity.POP_MOVIE_DETAILS;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 

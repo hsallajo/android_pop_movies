@@ -1,7 +1,7 @@
-package com.shu.popularmoviesstage1.utils;
+package com.shu.popularmovies.utils;
 
-import com.shu.popularmoviesstage1.model.MovieDbAPI;
-import com.shu.popularmoviesstage1.model.RetrofitClient;
+import com.shu.popularmovies.rest.MovieDbAPI;
+import com.shu.popularmovies.rest.RetrofitClient;
 
 public class DataUtilities {
 

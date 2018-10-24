@@ -1,4 +1,4 @@
-package com.shu.popularmoviesstage1;
+package com.shu.popularmovies;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.shu.popularmoviesstage1.model.Movie;
-import com.shu.popularmoviesstage1.utils.DataUtilities;
+import com.shu.popularmovies.model.Movie;
+import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
