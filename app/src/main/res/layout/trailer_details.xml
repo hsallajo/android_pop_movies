@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="90dp">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/trailer_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_xsmall"
+        app:layout_constraintEnd_toStartOf="@+id/btn_play_trailer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline"
+        tools:text="@string/str_trailer_name_example"/>
+
+    <TextView
+        android:id="@+id/trailer_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_xsmall"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintStart_toEndOf="@id/slash"
+        tools:text="@string/str_trailer_site_example"/>
+
+    <TextView
+        android:id="@+id/trailer_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_xsmall"
+        app:layout_constraintStart_toStartOf="@+id/trailer_name"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        tools:text="@string/str_trailer_type_example"/>
+
+    <TextView
+        android:id="@+id/slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_trailer_slash"
+        android:paddingBottom="@dimen/padding_xsmall"
+        app:layout_constraintStart_toEndOf="@+id/trailer_type"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        tools:text="@string/str_trailer_slash"/>
+
+    <ImageButton
+        android:id="@+id/btn_play_trailer"
+        android:layout_width="0dp"
+        android:layout_height="74dp"
+        app:srcCompat="@android:drawable/ic_media_play"
+        android:contentDescription="@string/btn_description_play_trailer"
+        android:layout_margin="@dimen/margin_small"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/guideline" />
+
+</android.support.constraint.ConstraintLayout>

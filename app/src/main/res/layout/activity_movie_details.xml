@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/padding_medium">
 
             <TextView
                 android:id="@+id/movie_title"
@@ -27,7 +27,7 @@
                 android:ellipsize="end"
                 android:gravity="center_horizontal"
                 android:maxLines="2"
-                android:paddingBottom="8dp"
+                android:paddingBottom="@dimen/padding_small"
                 tools:text="Avengers: Infinity War"
                 android:textSize="28sp" />
 
@@ -44,10 +44,10 @@
             android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -60,18 +60,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingBottom="8dp"
+                    android:paddingBottom="@dimen/padding_small"
                     android:text="@string/genre_label"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/list_subtitle_text_size" />
+                    android:textSize="@dimen/label_text_size" />
 
                 <TextView
                     android:id="@+id/genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingBottom="8dp"
-                    tools:text="Romance, adventure, action"
+                    android:paddingBottom="@dimen/padding_small"
+                    tools:text="@string/str_genre_list_sample"
                     android:textSize="16sp" />
 
                 <TextView
@@ -79,10 +79,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingBottom="8dp"
+                    android:paddingBottom="@dimen/padding_small"
                     android:text="@string/language_label"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/list_subtitle_text_size" />
+                    android:textSize="@dimen/label_text_size" />
 
                 <TextView
                     android:id="@+id/languages"
@@ -99,19 +99,19 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginRight="@dimen/margin_small"
             android:background="#ffffff" />
 
         <LinearLayout
             android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:orientation="horizontal"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium"
             android:baselineAligned="false">
 
             <FrameLayout
@@ -144,17 +144,17 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="@dimen/padding_small">
 
                         <TextView
                             android:id="@+id/User_rating_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:paddingBottom="8dp"
+                            android:paddingBottom="@dimen/padding_small"
                             android:text="@string/user_rating_label"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/list_subtitle_text_size" />
+                            android:textSize="@dimen/label_text_size" />
 
                         <TextView
                             android:id="@+id/user_rating"
@@ -174,17 +174,17 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="@dimen/padding_small">
 
                         <TextView
                             android:id="@+id/user_votes_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:paddingBottom="8dp"
+                            android:paddingBottom="@dimen/padding_small"
                             android:text="@string/user_votes_label"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/list_subtitle_text_size" />
+                            android:textSize="@dimen/label_text_size" />
 
                         <TextView
                             android:id="@+id/user_votes"
@@ -206,38 +206,38 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:background="#ffffff" />
 
         <LinearLayout
             android:id="@+id/row3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium">
 
             <TextView
                 android:id="@+id/movie_plot_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingBottom="8dp"
+                android:paddingBottom="@dimen/padding_small"
                 android:text="@string/movie_plot_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_text_size" />
+                android:textSize="@dimen/label_text_size" />
 
             <TextView
                 android:id="@+id/movie_plot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:textSize="14sp"
+                android:paddingBottom="@dimen/padding_small"
+                android:textSize="@dimen/text_size_medium"
                 android:gravity="fill_horizontal" />
         </LinearLayout>
 
@@ -245,40 +245,40 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:background="#ffffff" />
 
         <LinearLayout
             android:id="@+id/row4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:layout_marginStart="@dimen/padding_small"
+            android:layout_marginEnd="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:paddingBottom="16dp"
-                android:text="@string/more_details_label"
+                android:paddingBottom="@dimen/padding_medium"
+                android:text="@string/trailers_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_text_size" />
+                android:textSize="@dimen/header_text_size" />
 
             <TextView
                 android:id="@+id/original_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:paddingBottom="8dp"
+                android:paddingBottom="@dimen/padding_small"
                 android:text="@string/original_name_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_text_size" />
+                android:textSize="@dimen/label_text_size" />
 
             <TextView
                 android:id="@+id/original_name"
@@ -286,7 +286,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 tools:text="Avengers: Infinity War"
-                android:paddingBottom="16dp"
+                android:paddingBottom="@dimen/padding_medium"
                 android:textSize="16sp" />
 
             <TextView
@@ -294,10 +294,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:paddingBottom="8dp"
+                android:paddingBottom="@dimen/padding_small"
                 android:text="@string/release_date_label"
                 android:textAllCaps="true"
-                android:textSize="@dimen/list_subtitle_text_size" />
+                android:textSize="@dimen/label_text_size" />
 
             <TextView
                 android:id="@+id/release_date"
@@ -306,6 +306,30 @@
                 android:layout_gravity="start"
                 tools:text="2018-09-09"
                 android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium">
+
+            <TextView
+                android:id="@+id/tv_header_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/padding_medium"
+                android:text="@string/str_header_movie_reviews"
+                android:textAllCaps="true"
+                android:textSize="@dimen/header_text_size" />
 
         </LinearLayout>
 

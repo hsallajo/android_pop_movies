@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/padding_medium"
+    android:paddingBottom="@dimen/padding_medium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/review_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/padding_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/str_review_header_example" />
+
+    <TextView
+        android:id="@+id/review_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_size_medium"
+        android:paddingBottom="@dimen/padding_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_header"
+        tools:text="@string/str_review_author_example" />
+
+    <TextView
+        android:id="@+id/review_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="fill_horizontal"
+        android:ellipsize="end"
+        android:maxLines="8"
+        android:textSize="@dimen/text_size_medium"
+        android:paddingBottom="@dimen/padding_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_author"
+        tools:text="@string/str_review_content_sample" />
+
+    <TextView
+        android:id="@+id/review_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textSize="@dimen/text_size_medium"
+        android:paddingBottom="@dimen/margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_content"
+        tools:text="@string/str_review_url_example" />
+</android.support.constraint.ConstraintLayout>

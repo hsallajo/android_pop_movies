@@ -13,6 +13,7 @@ public class TrailerPage {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("results")
     @Expose
     private List<Trailer> results = null;
