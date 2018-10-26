@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shu.popularmovies.database.MovieDatabase;
+import com.shu.popularmovies.database.MovieEntry;
 import com.shu.popularmovies.model.Movie;
 import com.shu.popularmovies.model.MovieDetails;
 import com.shu.popularmovies.model.MovieGenre;
@@ -48,6 +50,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private List<Trailer> movieTrailers = null;
 
     private List<Review> movieReviews = null;
+    
+    private boolean isFavorite = false;
+    
+    private MovieDatabase mdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
 
         movieTrailers = new ArrayList<Trailer>();
-
         movieReviews = new ArrayList<Review>();
 
         Parcelable p = getIntent().getParcelableExtra(POP_MOVIE_DETAILS);
@@ -80,6 +85,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         loadMovieTrailers(id);
 
         loadMovieReviews(id);
+
+        mdb = MovieDatabase.getInstance(this);
+        
+    }
+    
+    public void setFavorite( View v ){
+        Log.d(TAG, "setFavorite: click");
+        mdb.movieDao().insert( new MovieEntry( movieData.getTitle(), movieData.getId()
+                , movieData.getPosterPath() ) );
     }
 
     private void loadMovieDetails(int id) {
