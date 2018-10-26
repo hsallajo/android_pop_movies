@@ -1,8 +1,7 @@
 package com.shu.popularmovies;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,8 @@ import com.shu.popularmovies.model.Movie;
 import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import java.util.List;
+
+
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
@@ -48,7 +49,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return movieData.size();
     }
 
-    public class MovieViewHolder extends ViewHolder implements View.OnClickListener {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView iv;
 
