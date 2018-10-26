@@ -127,7 +127,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         ImageView iv = findViewById(R.id.movie_poster_thumbnail);
         String path = DataUtilities.MOVIE_DB_POSTER_PATH + movieData.getPosterPath();
-        Picasso.with(this)
+        Picasso.get()
                 .load(path).fit()
                 .centerInside()
                 .into(iv);

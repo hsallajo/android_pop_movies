@@ -63,7 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
             String path = DataUtilities.MOVIE_DB_POSTER_PATH + movieData.get(position).getPosterPath();
 
-            Picasso.with(iv.getContext())
+            Picasso.get()
                     .load(path)
                     .into(iv);
         }
