@@ -1,5 +1,9 @@
 package com.shu.popularmovies.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.shu.popularmovies.BuildConfig;
 import com.shu.popularmovies.rest.MovieDbAPI;
 import com.shu.popularmovies.rest.RetrofitClient;
@@ -54,6 +58,22 @@ public class DataUtilities {
 
     public static MovieDbAPI getMovieDb(){
         return RetrofitClient.getInstance(MOVIE_DB_BASE_URL).create(MovieDbAPI.class);
+    }
+
+    public static boolean isOnline(Context context) {
+
+        ConnectivityManager c =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (c == null)
+            return false;
+
+        NetworkInfo info = c.getActiveNetworkInfo();
+
+        return (info != null
+                && info.isConnectedOrConnecting()
+                && info.isConnected());
+
     }
 
     public static String genre(int id) {

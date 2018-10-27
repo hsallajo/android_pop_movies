@@ -2,33 +2,25 @@ package com.shu.popularmovies;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.shu.popularmovies.model.Movie;
-import com.shu.popularmovies.rest.MovieDbAPI;
-import com.shu.popularmovies.model.MoviePage;
 import com.shu.popularmovies.utils.DataUtilities;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements MovieListAdapter.MovieListClickListener {
 
@@ -42,21 +34,19 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     private static final double CONST_TH_LOAD_NEW_MOVIES = 0.67;
 
     private List<Movie> movieData;
-    private int lastPage = 0;
+
     private RecyclerView recyclerView;
     private MovieListAdapter movieListAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private DataUtilities.MovieSortOption sortOrderSelection
             = DataUtilities.MovieSortOption.mostPopular;
 
-    private MovieDbAPI movieDb;
-
-    private static String dbUserKey;
+    MainViewModel model;
+    private boolean loading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        dbUserKey = BuildConfig.MOVIE_DB_USER_API_KEY;
+        Log.d(TAG, "lifecycle onCreate: ");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -68,15 +58,36 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         recyclerView.setLayoutManager(layoutManager);
 
         movieData = new ArrayList<>();
+
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
 
-        movieDb = DataUtilities.getMovieDb();
+        //movieDb = DataUtilities.getMovieDb();
 
-        loadMovies(sortOrderSelection);
+        model = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        model.getMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+
+                refreshCache(movies);
+                loading = false;
+            }
+        });
 
         addEndlessScrolling();
 
+    }
+
+    private void refreshCache(List<Movie> extractedMovies) {
+
+        if (extractedMovies == null || extractedMovies.isEmpty()) {
+            return;
+        }
+
+        movieData.clear();
+        movieData.addAll(extractedMovies);
+        movieListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -112,8 +123,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
             default:
         }
 
-        resetMovieData();
-        loadMovies(sortOrderSelection);
+        model.setMovieSortOption(sortOrderSelection);
 
         return true;
     }
@@ -133,14 +143,11 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         startActivity(i);
     }
 
-    private void resetMovieData() {
-
-        lastPage = 0;
-        movieData.clear();
-
-    }
 
     private void addEndlessScrolling() {
+
+        if (loading)
+            return;
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -155,8 +162,10 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                     // if user is scrolling down, estimate if ~2/3 of loaded views have been passed.
                     if ((positionOfFirstVisibleView
                             + numVisibleViews) / numTotalViews > CONST_TH_LOAD_NEW_MOVIES) {
+
                         // load a new set (page) of views.
-                        loadMovies(DataUtilities.MovieSortOption.topRated);
+                        loading = true;
+                        model.nextPage();
                     }
 
                 }
@@ -164,59 +173,35 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         });
     }
 
-    private void loadMovies(DataUtilities.MovieSortOption movieSortOpt) {
 
-        if (!isOnline()) {
-            Toast.makeText(this, R.string.err_msg_no_network, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        lastPage++;
-
-        movieDb.loadMovies(movieSortOpt.toString(), dbUserKey, Integer.toString(lastPage))
-                .enqueue(new Callback<MoviePage>() {
-                    @Override
-                    public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
-                        if(response.isSuccessful()){
-                            updateData(response.body().getMovies());
-                        } else {
-                            Log.d(TAG, "onResponse: response.code " + response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<MoviePage> call, Throwable t) {
-                        Context c = getApplicationContext();
-                        Toast.makeText(c, getString(R.string.err_msg_invalid_query), Toast.LENGTH_LONG).show();
-                        Log.d(TAG, "onFailure: " + t);
-                    }
-                });
-
+    // todo: remove
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "lifecycle onResume: ");
     }
 
-    private boolean isOnline() {
-
-        ConnectivityManager c =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (c == null)
-            return false;
-
-        NetworkInfo info = c.getActiveNetworkInfo();
-
-        return (info != null
-                && info.isConnectedOrConnecting()
-                && info.isConnected());
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "lifecycle onPause: ");
     }
 
-    private void updateData(List<Movie> extractedMovies){
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "lifecycle onStart: ");
+    }
 
-        if (extractedMovies == null || extractedMovies.isEmpty()) {
-            return;
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, " lifecycle onStop: ");
+    }
 
-        movieData.addAll(extractedMovies);
-        movieListAdapter.notifyDataSetChanged();
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "lifecycle onRestart: ");
     }
 }
