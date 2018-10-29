@@ -4,19 +4,24 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.shu.popularmovies.database.FavMovieEntry;
+import com.shu.popularmovies.database.FavMoviesDatabase;
 import com.shu.popularmovies.model.Movie;
 import com.shu.popularmovies.model.MoviePage;
 import com.shu.popularmovies.rest.RestUtils;
 import com.shu.popularmovies.rest.TMDb;
+import com.shu.popularmovies.utils.AppExecutors;
 import com.shu.popularmovies.utils.DataUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +36,12 @@ public class MainViewModel extends AndroidViewModel {
             = DataUtilities.MovieSortOption.mostPopular;
     private boolean resetCacheOnNextResponse = false;
 
+    // Favorite movies database
+    private List<FavMovieEntry> entries;
+    FavMoviesDatabase database;
+
+    private LiveData<List<FavMovieEntry>> entryList;
+
     public MainViewModel(@NonNull Application application) {
         super(application);
 
@@ -41,6 +52,26 @@ public class MainViewModel extends AndroidViewModel {
             loadMovies();
         }
 
+        // Favorite movies database
+        database = FavMoviesDatabase.getInstance(application.getApplicationContext());
+
+        entryList = database.favMovieDao().loadAllMovies();
+        entryList = Transformations.map(entryList,
+
+                new Function< List<FavMovieEntry>, List<FavMovieEntry>>(){
+                    @Override
+                    public List<FavMovieEntry> apply(List<FavMovieEntry> input) {
+                        // refresh cache
+                        if (sortOrderSelection == DataUtilities.MovieSortOption.favorite)
+                            refresh(input);
+
+                        return input;
+                    }
+                });
+    }
+
+    public LiveData<List<FavMovieEntry>> getFavMovies() {
+        return entryList;
     }
 
 
@@ -58,8 +89,10 @@ public class MainViewModel extends AndroidViewModel {
 
         sortOrderSelection = movieSortOpt;
 
-        loadMovies();
-
+        if (sortOrderSelection != DataUtilities.MovieSortOption.favorite)
+            loadMovies();
+        else
+            loadMoviesFromFavsDatabase();
     }
 
     private void resetPage() {
@@ -87,24 +120,7 @@ public class MainViewModel extends AndroidViewModel {
                         if (response.isSuccessful()) {
 
                             List<Movie> extractedMovies = response.body().getMovies();
-                            if (extractedMovies == null || extractedMovies.isEmpty()) {
-                                return;
-                            }
-
-                            List<Movie> t = movieList.getValue();
-
-                            if (t == null) {
-                                t = new ArrayList<>();
-                            }
-
-                            // resetCacheOnNextResponse if sort order has changed
-                            if (resetCacheOnNextResponse) {
-                                resetCacheOnNextResponse = false;
-                                t.clear();
-                            }
-
-                            t.addAll(extractedMovies);
-                            movieList.setValue(t);
+                            refreshCache(extractedMovies);
 
                         } else {
                             Log.d(TAG, "onResponse: response.code " + response.code());
@@ -117,4 +133,66 @@ public class MainViewModel extends AndroidViewModel {
                     }
                 });
     }
+
+    private void loadMoviesFromFavsDatabase() {
+
+        if (sortOrderSelection != DataUtilities.MovieSortOption.favorite)
+            return;
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                entries = database.favMovieDao().loadAll();
+
+                AppExecutors.getInstance().mainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        refresh(entries);
+                    }
+                });
+
+            }
+        });
+    }
+
+    void refresh(List<FavMovieEntry> e ){
+
+        List<Movie> extractedMovies = convert(e);
+        refreshCache(extractedMovies);
+
+    }
+
+    void refreshCache(List<Movie> e ){
+
+        if (e == null || e.isEmpty()) {
+            return;
+        }
+
+        List<Movie> t = movieList.getValue();
+
+        if (t == null) {
+            t = new ArrayList<>();
+        }
+
+        // resetCacheOnNextResponse if sort order has changed
+        if (resetCacheOnNextResponse) {
+            resetCacheOnNextResponse = false;
+            t.clear();
+        }
+
+        t.addAll(e);
+        movieList.setValue(t);
+    }
+
+    private List<Movie> convert(List<FavMovieEntry> favMovieEntries) {
+        List<Movie> l = new ArrayList<>();
+        for (FavMovieEntry entry : favMovieEntries
+                ) {
+            Movie m = RestUtils.convertToMovie(entry);
+            l.add(m);
+        }
+        return l;
+    }
+
 }

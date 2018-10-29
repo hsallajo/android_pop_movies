@@ -34,7 +34,8 @@ public class DataUtilities {
     public enum MovieSortOption {
 
         mostPopular("popular"),
-        topRated("top_rated");
+        topRated("top_rated"),
+        favorite("favorite");
 
         private String sortOption;
 

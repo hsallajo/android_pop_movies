@@ -76,40 +76,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         populateMovieDetailsView();
 
-        int id = movieData.getId();
+        loadMovieTrailers(movieData.getId());
 
-        Log.d(TAG, "Movie name and id: " + movieData.getTitle() + ", " + id);
-
-        //loadMovieDetails(id);
-        loadMovieTrailers(id);
-        loadMovieReviews(id);
+        loadMovieReviews(movieData.getId());
 
         loadFavorites();
         
     }
     
-    public void onToggleStar( View v ){
 
-        final FavMovieEntry entry = new FavMovieEntry( movieData.getTitle()
-                , movieData.getId()
-                , movieData.getPosterPath() );
-
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-
-                if(!isFavMovie){
-                    Log.d(TAG, "run: toggle ON");
-                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().insert( entry );
-                }
-                else {
-                    Log.d(TAG, "run: toggle OFF");
-                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().deleteByMovieId( movieData.getId() );
-                }
-            }
-        });
-
-    }
 
     private void setFavorite(boolean isFavorite){
 
@@ -127,19 +102,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void loadFavorites(){
-        Log.d(TAG, "loading favorites: ");
         FavoritesViewModel model = ViewModelProviders.of(this).get(FavoritesViewModel.class);
 
         model.getFavorites().observe(this, new Observer<List<FavMovieEntry>>() {
             @Override
             public void onChanged(List<FavMovieEntry> movieEntries) {
-                Log.d(TAG, "receiving favorites from model");
                 setFavorite( containsId( movieEntries, movieData.getId() ));
             }
         });
     }
 
     private boolean containsId(final List<FavMovieEntry> list, final int id){
+
         for ( FavMovieEntry entry : list
              ) {
             if ( id == entry.getMovieId() )
@@ -148,29 +122,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         return false;
     }
 
-    /*private void loadMovieDetails(int id) {
-
-        Call<MovieDetails> res = DataUtilities.getTMDbInstance().getMovieDetails(Integer.toString(id), DataUtilities.dbUserKey);
-
-        res.enqueue(new Callback<MovieDetails>() {
-            @Override
-            public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
-                if(response.isSuccessful()){
-                    List<MovieGenre> g = response.body().getGenres();
-                    Iterator<MovieGenre> i = g.iterator();
-                    while(i.hasNext()){
-                        MovieGenre genre = i.next();
-                        Log.d(TAG, "genre is: " + genre.getName() + "," + genre.getId());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieDetails> call, Throwable t) {
-
-            }
-        });
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -397,5 +348,25 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 color = R.color.rating_5; }
         }
         return ContextCompat.getColor(this, color);
+    }
+
+    public void onToggleStar(View v){
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if(isFavMovie){
+                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().deleteByMovieId( movieData.getId() );
+                }
+                else {
+                    final FavMovieEntry entry = RestUtils.convertToMovieEntry(movieData);
+
+                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().insert( entry );
+
+                }
+            }
+        });
+
     }
 }

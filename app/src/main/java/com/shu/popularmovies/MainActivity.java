@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.shu.popularmovies.database.FavMovieEntry;
 import com.shu.popularmovies.model.Movie;
 import com.shu.popularmovies.utils.DataUtilities;
 
@@ -62,18 +63,23 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
 
-        //movieDb = DataUtilities.getTMDbInstance();
-
         model = ViewModelProviders.of(this).get(MainViewModel.class);
 
         model.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-
                 refreshCache(movies);
                 loading = false;
             }
         });
+
+        model.getFavMovies().observe(this, new Observer<List<FavMovieEntry>>() {
+            @Override
+            public void onChanged(List<FavMovieEntry> favMovieEntries) {
+                // Observer registration is required so model can cache the updates.
+            }
+        });
+
 
         addEndlessScrolling();
 
@@ -103,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int itemId = item.getItemId();
+        Log.d(TAG, "onOptionsItemSelected: " + itemId);
 
         switch (itemId) {
 
@@ -117,6 +124,13 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                 if (sortOrderSelection == DataUtilities.MovieSortOption.topRated)
                     return true;
                 sortOrderSelection = DataUtilities.MovieSortOption.topRated;
+                break;
+            }
+
+            case R.id.switch_favorites: {
+                if (sortOrderSelection == DataUtilities.MovieSortOption.favorite)
+                    return true;
+                sortOrderSelection = DataUtilities.MovieSortOption.favorite;
                 break;
             }
 
@@ -163,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                     if ((positionOfFirstVisibleView
                             + numVisibleViews) / numTotalViews > CONST_TH_LOAD_NEW_MOVIES) {
 
-                        // load a new set (page) of views.
+                        // load a new set of views.
                         loading = true;
                         model.nextPage();
                     }
@@ -171,37 +185,5 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
                 }
             }
         });
-    }
-
-
-    // todo: remove
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "lifecycle onResume: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "lifecycle onPause: ");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "lifecycle onStart: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, " lifecycle onStop: ");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "lifecycle onRestart: ");
     }
 }

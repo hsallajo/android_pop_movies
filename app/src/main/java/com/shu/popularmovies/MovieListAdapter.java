@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.shu.popularmovies.model.Movie;
 import com.shu.popularmovies.rest.RestUtils;
-import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 

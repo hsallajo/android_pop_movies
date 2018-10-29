@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
+    <string name="app_name">PopMovies</string>
     <string name="title_movie_details">Movie Details</string>
     <string name="err_msg_no_network">No network</string>
     <string name="err_msg_invalid_query">Invalid query string</string>
@@ -25,4 +25,5 @@
     <string name="str_trailer_name_example">The Shawshank Redemption - Trailer</string>
     <string name="str_review_content_sample">There is a reason why this movie is at the top of any popular list your will find. Very strong performances from lead actors and a story line from the literary brilliance of Stephen King (and no, its not a horror). Sufficient drama and depth to keep you interested and occupied without stupefying your brain. It is the movie that has something for everyone.</string>
     <string name="str_genre_list_sample">Romance, adventure, action</string>
+    <string name="favorites">Favorites</string>
 </resources>
