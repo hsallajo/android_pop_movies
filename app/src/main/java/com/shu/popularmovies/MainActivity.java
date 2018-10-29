@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
         movieListAdapter = new MovieListAdapter(movieData, this);
         recyclerView.setAdapter(movieListAdapter);
 
-        //movieDb = DataUtilities.getMovieDb();
+        //movieDb = DataUtilities.getTMDbInstance();
 
         model = ViewModelProviders.of(this).get(MainViewModel.class);
 

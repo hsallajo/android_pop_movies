@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -54,6 +55,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btn_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00ffffff"
+                    app:srcCompat="@android:drawable/btn_star_big_off"
+                    android:onClick="onToggleStar"/>
 
                 <TextView
                     android:id="@+id/genre_label"
@@ -123,8 +132,7 @@
                     android:id="@+id/movie_poster_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:contentDescription="@string/movie_poster_image"
-                    android:onClick="setFavorite"/>
+                    android:contentDescription="@string/movie_poster_image" />
             </FrameLayout>
 
             <FrameLayout

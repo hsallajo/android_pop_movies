@@ -17,15 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.shu.popularmovies.database.MovieDatabase;
-import com.shu.popularmovies.database.MovieEntry;
+import com.shu.popularmovies.database.FavMovieEntry;
+import com.shu.popularmovies.database.FavMoviesDatabase;
 import com.shu.popularmovies.model.Movie;
-import com.shu.popularmovies.model.MovieDetails;
-import com.shu.popularmovies.model.MovieGenre;
 import com.shu.popularmovies.model.Review;
 import com.shu.popularmovies.model.ReviewPage;
 import com.shu.popularmovies.model.Trailer;
 import com.shu.popularmovies.model.TrailerPage;
+import com.shu.popularmovies.rest.RestUtils;
+import com.shu.popularmovies.utils.AppExecutors;
 import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,10 +52,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private List<Trailer> movieTrailers = null;
 
     private List<Review> movieReviews = null;
-    
-    private boolean isFavorite = false;
-    
-    private MovieDatabase mdb;
+
+    private boolean isFavMovie = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,25 +80,77 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Log.d(TAG, "Movie name and id: " + movieData.getTitle() + ", " + id);
 
-        loadMovieDetails(id);
-        
+        //loadMovieDetails(id);
         loadMovieTrailers(id);
-
         loadMovieReviews(id);
 
-        mdb = MovieDatabase.getInstance(this);
+        loadFavorites();
         
     }
     
-    public void setFavorite( View v ){
-        Log.d(TAG, "setFavorite: click");
-        mdb.movieDao().insert( new MovieEntry( movieData.getTitle(), movieData.getId()
-                , movieData.getPosterPath() ) );
+    public void onToggleStar( View v ){
+
+        final FavMovieEntry entry = new FavMovieEntry( movieData.getTitle()
+                , movieData.getId()
+                , movieData.getPosterPath() );
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if(!isFavMovie){
+                    Log.d(TAG, "run: toggle ON");
+                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().insert( entry );
+                }
+                else {
+                    Log.d(TAG, "run: toggle OFF");
+                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().deleteByMovieId( movieData.getId() );
+                }
+            }
+        });
+
     }
 
-    private void loadMovieDetails(int id) {
+    private void setFavorite(boolean isFavorite){
 
-        Call<MovieDetails> res = DataUtilities.getMovieDb().getMovieDetails(Integer.toString(id), DataUtilities.dbUserKey);
+        ImageButton btn = (ImageButton) findViewById(R.id.btn_favorite);
+
+        if(isFavorite){
+            isFavMovie = true;
+            btn.setImageResource(android.R.drawable.btn_star_big_on);
+        }
+        else {
+            isFavMovie = false;
+            btn.setImageResource(android.R.drawable.btn_star_big_off);
+        }
+
+    }
+
+    private void loadFavorites(){
+        Log.d(TAG, "loading favorites: ");
+        FavoritesViewModel model = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+
+        model.getFavorites().observe(this, new Observer<List<FavMovieEntry>>() {
+            @Override
+            public void onChanged(List<FavMovieEntry> movieEntries) {
+                Log.d(TAG, "receiving favorites from model");
+                setFavorite( containsId( movieEntries, movieData.getId() ));
+            }
+        });
+    }
+
+    private boolean containsId(final List<FavMovieEntry> list, final int id){
+        for ( FavMovieEntry entry : list
+             ) {
+            if ( id == entry.getMovieId() )
+                return true;
+        }
+        return false;
+    }
+
+    /*private void loadMovieDetails(int id) {
+
+        Call<MovieDetails> res = DataUtilities.getTMDbInstance().getMovieDetails(Integer.toString(id), DataUtilities.dbUserKey);
 
         res.enqueue(new Callback<MovieDetails>() {
             @Override
@@ -118,7 +170,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -140,7 +192,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvTitle.setText(movieData.getTitle());
 
         ImageView iv = findViewById(R.id.movie_poster_thumbnail);
-        String path = DataUtilities.MOVIE_DB_POSTER_PATH + movieData.getPosterPath();
+        String path = RestUtils.MOVIE_DB_POSTER_PATH + movieData.getPosterPath();
         Picasso.get()
                 .load(path).fit()
                 .centerInside()
@@ -192,7 +244,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void loadMovieTrailers( int movieId ){
 
-        Call<TrailerPage> res = DataUtilities.getMovieDb().getTrailers(Integer.toString(movieId), DataUtilities.dbUserKey);
+        Call<TrailerPage> res = RestUtils.getTMDbInstance().getTrailers(Integer.toString(movieId), RestUtils.dbUserKey);
 
         res.enqueue(new Callback<TrailerPage>() {
             @Override
@@ -215,8 +267,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         int pgNum = 1;
 
-        Call<ReviewPage> res = DataUtilities.getMovieDb().getReviews(Integer.toString(movieId)
-                , DataUtilities.dbUserKey
+        Call<ReviewPage> res = RestUtils.getTMDbInstance().getReviews(Integer.toString(movieId)
+                , RestUtils.dbUserKey
                 , Integer.toString(pgNum));
 
         res.enqueue(new Callback<ReviewPage>() {
@@ -225,7 +277,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     movieReviews.addAll(response.body().getReviews());
                     populateMovieReviews();
-                    //Log.d(TAG, "onResponse: populated, number of reviews: " + response.body().getReviews().size() + ", complete.");
                 }
             }
 

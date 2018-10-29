@@ -6,7 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie")
-public class MovieEntry {
+public class FavMovieEntry {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -17,13 +17,13 @@ public class MovieEntry {
     private String posterPath;
 
     @Ignore
-    public MovieEntry(String title, int movieId, String posterPath){
+    public FavMovieEntry(String title, int movieId, String posterPath){
         this.title = title;
         this.movieId = movieId;
         this.posterPath = posterPath;
     }
 
-    public MovieEntry(int id, String title, int movieId, String posterPath){
+    public FavMovieEntry(int id, String title, int movieId, String posterPath){
         this.id = id;
         this.title = title;
         this.movieId = movieId;

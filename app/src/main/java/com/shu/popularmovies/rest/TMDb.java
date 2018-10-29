@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface MovieDbAPI {
+public interface TMDb {
 
     @GET("{sort_option}?language=en-US")
     Call<MoviePage> loadMovies( @Path("sort_option") String sort_option

@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.shu.popularmovies.model.Movie;
 import com.shu.popularmovies.model.MoviePage;
-import com.shu.popularmovies.rest.MovieDbAPI;
+import com.shu.popularmovies.rest.RestUtils;
+import com.shu.popularmovies.rest.TMDb;
 import com.shu.popularmovies.utils.DataUtilities;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class MainViewModel extends AndroidViewModel {
             return;
         }
 
-        MovieDbAPI db = DataUtilities.getMovieDb();
+        TMDb db = RestUtils.getTMDbInstance();
         db.loadMovies(sortOrderSelection.toString(), BuildConfig.MOVIE_DB_USER_API_KEY, Integer.toString(lastPage))
                 .enqueue(new Callback<MoviePage>() {
                     @Override

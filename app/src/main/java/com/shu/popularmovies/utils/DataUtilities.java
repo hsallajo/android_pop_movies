@@ -4,17 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.shu.popularmovies.BuildConfig;
-import com.shu.popularmovies.rest.MovieDbAPI;
-import com.shu.popularmovies.rest.RetrofitClient;
-
 public class DataUtilities {
 
     // Constants
     private final static String TAG = DataUtilities.class.getSimpleName();
-
-    final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie/";
-    public final static String MOVIE_DB_POSTER_PATH = "https://image.tmdb.org/t/p/w185";
 
     public final static String YOUTUBE_PATH = "https://www.youtube.com/watch?v=";
 
@@ -52,12 +45,6 @@ public class DataUtilities {
         public String toString(){
             return sortOption;
         }
-    }
-
-    public static String dbUserKey = BuildConfig.MOVIE_DB_USER_API_KEY;
-
-    public static MovieDbAPI getMovieDb(){
-        return RetrofitClient.getInstance(MOVIE_DB_BASE_URL).create(MovieDbAPI.class);
     }
 
     public static boolean isOnline(Context context) {

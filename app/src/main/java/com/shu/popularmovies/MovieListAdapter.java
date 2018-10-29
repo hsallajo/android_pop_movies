@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.shu.popularmovies.model.Movie;
+import com.shu.popularmovies.rest.RestUtils;
 import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -62,7 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         private void bind(int position) {
 
-            String path = DataUtilities.MOVIE_DB_POSTER_PATH + movieData.get(position).getPosterPath();
+            String path = RestUtils.MOVIE_DB_POSTER_PATH + movieData.get(position).getPosterPath();
 
             Picasso.get()
                     .load(path)
