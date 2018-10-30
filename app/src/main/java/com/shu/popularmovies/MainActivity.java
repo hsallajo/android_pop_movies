@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MovieListAdapter.
     private DataUtilities.MovieSortOption sortOrderSelection
             = DataUtilities.MovieSortOption.mostPopular;
 
-    MainViewModel model;
+    private MainViewModel model;
     private boolean loading = false;
 
     @Override

@@ -1,14 +1,12 @@
 package com.shu.popularmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +26,7 @@ import com.shu.popularmovies.rest.RestUtils;
 import com.shu.popularmovies.utils.AppExecutors;
 import com.shu.popularmovies.utils.DataUtilities;
 import com.squareup.picasso.Picasso;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -61,72 +60,30 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
 
-        movieTrailers = new ArrayList<Trailer>();
-        movieReviews = new ArrayList<Review>();
+        movieTrailers = new ArrayList<>();
+        movieReviews = new ArrayList<>();
 
         Parcelable p = getIntent().getParcelableExtra(POP_MOVIE_DETAILS);
 
         movieData = Parcels.unwrap(p);
 
-        if(movieData == null) {
+        if (movieData == null) {
             finish();
         }
 
         setTitle(getString(R.string.title_movie_details));
 
         populateMovieDetailsView();
-
         loadMovieTrailers(movieData.getId());
-
         loadMovieReviews(movieData.getId());
-
         loadFavorites();
-        
-    }
-    
-
-
-    private void setFavorite(boolean isFavorite){
-
-        ImageButton btn = (ImageButton) findViewById(R.id.btn_favorite);
-
-        if(isFavorite){
-            isFavMovie = true;
-            btn.setImageResource(android.R.drawable.btn_star_big_on);
-        }
-        else {
-            isFavMovie = false;
-            btn.setImageResource(android.R.drawable.btn_star_big_off);
-        }
 
     }
-
-    private void loadFavorites(){
-        FavoritesViewModel model = ViewModelProviders.of(this).get(FavoritesViewModel.class);
-
-        model.getFavorites().observe(this, new Observer<List<FavMovieEntry>>() {
-            @Override
-            public void onChanged(List<FavMovieEntry> movieEntries) {
-                setFavorite( containsId( movieEntries, movieData.getId() ));
-            }
-        });
-    }
-
-    private boolean containsId(final List<FavMovieEntry> list, final int id){
-
-        for ( FavMovieEntry entry : list
-             ) {
-            if ( id == entry.getMovieId() )
-                return true;
-        }
-        return false;
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
 
             case android.R.id.home: {
                 finish();
@@ -137,7 +94,61 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void populateMovieDetailsView(){
+    public void onToggleStar(View v) {
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if (isFavMovie) {
+                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().deleteByMovieId(movieData.getId());
+                } else {
+                    final FavMovieEntry entry = RestUtils.convertToMovieEntry(movieData);
+
+                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().insert(entry);
+
+                }
+            }
+        });
+
+    }
+
+    private void loadFavorites() {
+        FavoritesViewModel model = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+
+        model.getFavorites().observe(this, new Observer<List<FavMovieEntry>>() {
+            @Override
+            public void onChanged(List<FavMovieEntry> movieEntries) {
+                setFavorite(containsId(movieEntries, movieData.getId()));
+            }
+        });
+    }
+
+    private void setFavorite(boolean isFavorite) {
+
+        ImageButton btn = findViewById(R.id.btn_favorite);
+
+        if (isFavorite) {
+            isFavMovie = true;
+            btn.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            isFavMovie = false;
+            btn.setImageResource(android.R.drawable.btn_star_big_off);
+        }
+
+    }
+
+    private boolean containsId(final List<FavMovieEntry> list, final int id) {
+
+        for (FavMovieEntry entry : list
+                ) {
+            if (id == entry.getMovieId())
+                return true;
+        }
+        return false;
+    }
+
+    private void populateMovieDetailsView() {
 
         TextView tvTitle = findViewById(R.id.movie_title);
         tvTitle.setText(movieData.getTitle());
@@ -149,14 +160,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .centerInside()
                 .into(iv);
 
-        TextView tvOriginalName= findViewById(R.id.original_name);
+        String backdropPath = RestUtils.MOVIE_DB_BACKDROP_PATH + movieData.getBackdropPath();
+        ImageView header_img = findViewById(R.id.movie_backdrop_img);
+        Picasso.get()
+                .load(backdropPath).fit()
+                .centerCrop()
+                .into(header_img);
+
+        TextView tvOriginalName = findViewById(R.id.original_name);
         tvOriginalName.setText(movieData.getOriginalTitle());
 
-        TextView tvLanguage= findViewById(R.id.languages);
+        TextView tvLanguage = findViewById(R.id.languages);
         tvLanguage.setText(movieData.getOriginalLanguage());
 
         TextView tvReleaseYear = findViewById(R.id.release_year);
-        tvReleaseYear.setText(movieData.getReleaseDate().substring(0,4));
+        tvReleaseYear.setText(movieData.getReleaseDate().substring(0, 4));
 
         TextView tvReleaseDate = findViewById(R.id.release_date);
         tvReleaseDate.setText(movieData.getReleaseDate());
@@ -169,11 +187,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             int genreId = i.next();
             String genreStr = DataUtilities.genre(genreId);
-            if( genreStr != null) {
+            if (genreStr != null) {
                 String capitalized = genreStr.substring(0, 1).toUpperCase() + genreStr.substring(1);
                 s.append(capitalized);
             }
-            if( i.hasNext() )
+            if (i.hasNext())
                 s.append(", ");
         }
         tvGenres.setText(s.toString());
@@ -181,9 +199,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         TextView tvUserRating = findViewById(R.id.user_rating);
         tvUserRating.setText(String.valueOf(movieData.getVoteAverage()));
-        GradientDrawable bg = (GradientDrawable)tvUserRating.getBackground();
+        GradientDrawable bg = (GradientDrawable) tvUserRating.getBackground();
         bg.setColor(
-                getColorForUserRating(movieData.getVoteAverage())
+                DataUtilities.getColorForUserRating(movieData.getVoteAverage(), getApplicationContext())
         );
 
         TextView tvUserVotes = findViewById(R.id.user_votes);
@@ -193,16 +211,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvPlot.setText(movieData.getOverview());
     }
 
-    private void loadMovieTrailers( int movieId ){
+    private void loadMovieTrailers(int movieId) {
 
         Call<TrailerPage> res = RestUtils.getTMDbInstance().getTrailers(Integer.toString(movieId), RestUtils.dbUserKey);
 
         res.enqueue(new Callback<TrailerPage>() {
             @Override
             public void onResponse(Call<TrailerPage> call, Response<TrailerPage> response) {
-                if(response.isSuccessful()){
-                    movieTrailers.addAll(response.body().getTrailers());
-                    populateMovieTrailers();
+                if (response.isSuccessful()) {
+                    if (response.body()!= null){
+                        movieTrailers.addAll(response.body().getTrailers());
+                        populateMovieTrailers();
+                    }
                 }
             }
 
@@ -214,7 +234,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void loadMovieReviews( int movieId ){
+    private void loadMovieReviews(int movieId) {
 
         int pgNum = 1;
 
@@ -225,9 +245,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         res.enqueue(new Callback<ReviewPage>() {
             @Override
             public void onResponse(Call<ReviewPage> call, Response<ReviewPage> response) {
-                if(response.isSuccessful()){
-                    movieReviews.addAll(response.body().getReviews());
-                    populateMovieReviews();
+                if (response.isSuccessful()) {
+                    if (response.body()!= null){
+                        movieReviews.addAll(response.body().getReviews());
+                        populateMovieReviews();
+                    }
                 }
             }
 
@@ -238,12 +260,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void populateMovieTrailers(){
+    private void populateMovieTrailers() {
 
         LinearLayout containerLayout = findViewById(R.id.row4);
 
-        Iterator<Trailer> i = (Iterator<Trailer>) movieTrailers.iterator();
-        while(i.hasNext()){
+        Iterator<Trailer> i = movieTrailers.iterator();
+        while (i.hasNext()) {
 
             Trailer t = i.next();
 
@@ -251,20 +273,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             TextView tv_trailer_name = trailer_layout.findViewById(R.id.trailer_name);
             TextView tv_trailer_type = trailer_layout.findViewById(R.id.trailer_type);
-            TextView tv_trailer_site = trailer_layout.findViewById(R.id.trailer_site);
 
-            ImageButton btn_trailer_play = (ImageButton) trailer_layout.findViewById(R.id.btn_play_trailer);
+            ImageButton btn_trailer_play = trailer_layout.findViewById(R.id.btn_play_trailer);
 
             tv_trailer_name.setText(t.getName());
             tv_trailer_type.setText(t.getType());
-            tv_trailer_site.setText(t.getSite());
 
             final String movieKey = t.getKey();
 
             btn_trailer_play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PlayTrailer(movieKey);
+                    startActivityForTrailer(movieKey);
                 }
             });
 
@@ -274,39 +294,44 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void populateMovieReviews(){
+    private void populateMovieReviews() {
         LinearLayout containerLayout = findViewById(R.id.row5);
 
-        Iterator<Review> i = (Iterator<Review>) movieReviews.iterator();
+        Iterator<Review> i = movieReviews.iterator();
 
         int cnt = 0;
-        while(i.hasNext()){
+        while (i.hasNext()) {
 
             Review r = i.next();
 
             View review_layout = LayoutInflater.from(this).inflate(R.layout.review_details, containerLayout, false);
 
-            TextView tv_review_header = review_layout.findViewById(R.id.review_header);
             TextView tv_review_author = review_layout.findViewById(R.id.review_author);
             TextView tv_review_content = review_layout.findViewById(R.id.review_content);
             TextView tv_review_url = review_layout.findViewById(R.id.review_url);
 
-            tv_review_header.setText(r.getContent());
             tv_review_author.setText(r.getAuthor());
             tv_review_content.setText(r.getContent());
             tv_review_url.setText(r.getUrl());
 
+            tv_review_url.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivityForMovieReview(v);
+                }
+            });
+
             containerLayout.addView(review_layout);
 
             cnt++;
-            if(cnt >= 5) break;
+            if (cnt >= 5) break;
 
         }
     }
 
-    private void PlayTrailer(String key){
+    private void startActivityForTrailer(String key) {
 
-        if(key == null || key.equals(""))
+        if (key == null || key.equals(""))
             return;
 
         String url = DataUtilities.YOUTUBE_PATH + key;
@@ -320,53 +345,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private int getColorForUserRating(double userRating) {
+    private void startActivityForMovieReview(View view) {
+        TextView tv = view.findViewById(R.id.review_url);
+        String u = tv.getText().toString();
+        Uri uri = Uri.parse(u);
 
-        int roundedVal = (int) Math.ceil(userRating);
-        int color;
+        if (uri == null)
+            return;
 
-        switch(roundedVal){
-            case 0:
-            case 1:
-            case 2: {
-                color = R.color.rating_1;
-                break; }
-            case 3:
-            case 4:{
-                color = R.color.rating_2;
-                break; }
-            case 5:
-            case 6:{
-                color = R.color.rating_3;
-                break; }
-            case 7:
-            case 8:{
-                color = R.color.rating_4;
-                break; }
-            case 9:
-            default:{
-                color = R.color.rating_5; }
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return ContextCompat.getColor(this, color);
-    }
-
-    public void onToggleStar(View v){
-
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-
-                if(isFavMovie){
-                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().deleteByMovieId( movieData.getId() );
-                }
-                else {
-                    final FavMovieEntry entry = RestUtils.convertToMovieEntry(movieData);
-
-                    FavMoviesDatabase.getInstance(getApplicationContext()).favMovieDao().insert( entry );
-
-                }
-            }
-        });
 
     }
 }

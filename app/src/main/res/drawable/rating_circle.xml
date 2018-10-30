@@ -3,7 +3,7 @@
     android:shape="oval">
     <solid android:color="@color/rating_1" />
     <size
-        android:width="46dp"
-        android:height="46dp" />
-    <corners android:radius="18dp" />
+        android:width="@dimen/icon_xy"
+        android:height="@dimen/icon_xy" />
+    <corners android:radius="@dimen/corner_radius" />
 </shape>

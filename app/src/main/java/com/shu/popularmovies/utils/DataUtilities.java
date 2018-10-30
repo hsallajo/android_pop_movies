@@ -4,6 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.shu.popularmovies.R;
+
+import androidx.core.content.ContextCompat;
+
 public class DataUtilities {
 
     // Constants
@@ -37,7 +41,7 @@ public class DataUtilities {
         topRated("top_rated"),
         favorite("favorite");
 
-        private String sortOption;
+        private final String sortOption;
 
         MovieSortOption(String opt){
             this.sortOption = opt;
@@ -127,5 +131,40 @@ public class DataUtilities {
             default:
                 return null;
         }
+    }
+
+    public static int getColorForUserRating(double userRating, Context context) {
+
+        int roundedVal = (int) Math.ceil(userRating);
+        int color;
+
+        switch (roundedVal) {
+            case 0:
+            case 1:
+            case 2: {
+                color = R.color.rating_1;
+                break;
+            }
+            case 3:
+            case 4: {
+                color = R.color.rating_2;
+                break;
+            }
+            case 5:
+            case 6: {
+                color = R.color.rating_3;
+                break;
+            }
+            case 7:
+            case 8: {
+                color = R.color.rating_4;
+                break;
+            }
+            case 9:
+            default: {
+                color = R.color.rating_5;
+            }
+        }
+        return ContextCompat.getColor(context, color);
     }
 }

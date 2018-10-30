@@ -1,11 +1,71 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Caps12withBottomPadding">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/header_text_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <style name="Text14withBottomPadding">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <style name="Text16withBottomPadding" parent="Text14withBottomPadding">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="DetailsScreenRow">
+        <item name = "android:layout_width">match_parent</item>
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:orientation">vertical</item>
+        <item name = "android:paddingStart">@dimen/padding_small</item>
+        <item name = "android:paddingEnd">@dimen/padding_small</item>
+        <item name = "android:paddingTop">@dimen/padding_small</item>
+        <item name = "android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+    <style name="VerticalPadding16" parent = "DetailsScreenRow">
+        <item name = "android:paddingTop">@dimen/padding_medium</item>
+        <item name = "android:paddingBottom">@dimen/padding_medium</item>
+    </style>
+
+
+    <style name="VerticalPaddingSmall">
+        <item name = "android:paddingTop">@dimen/padding_small</item>
+        <item name = "android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
+<style name="dividerHorizontal">
+    <item name = "android:layout_width">match_parent</item>
+    <item name = "android:layout_height">1dp</item>
+    <item name = "android:layout_marginLeft">0dp</item>
+    <item name = "android:layout_marginRight">0dp</item>
+    <item name = "android:background">@color/divider</item>
+    <item name = "android:paddingEnd">@dimen/padding_small</item>
+    <item name = "android:paddingStart">@dimen/padding_small</item>
+</style>
+
+    <style name="dividerVertical">
+        <item name = "android:layout_width">1dp</item>
+        <item name = "android:layout_height">match_parent</item>
+        <item name = "android:layout_marginLeft">0dp</item>
+        <item name = "android:layout_marginRight">0dp</item>
+        <item name = "android:background">@color/divider</item>
     </style>
 
 </resources>

@@ -7,7 +7,7 @@ import org.parceler.Parcel;
 import org.parceler.ParcelProperty;
 
 @Parcel
-public class MovieSpokenLanguage {
+class MovieSpokenLanguage {
 
     @SerializedName("iso_639_1")
     @Expose

@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 public class MainViewModel extends AndroidViewModel {
 
-    public static final String TAG = MainViewModel.class.getSimpleName();
+    private static final String TAG = MainViewModel.class.getSimpleName();
     private int lastPage;
     private MutableLiveData<List<Movie>> movieList;
 
@@ -38,7 +38,7 @@ public class MainViewModel extends AndroidViewModel {
 
     // Favorite movies database
     private List<FavMovieEntry> entries;
-    FavMoviesDatabase database;
+    private final FavMoviesDatabase database;
 
     private LiveData<List<FavMovieEntry>> entryList;
 
@@ -52,7 +52,6 @@ public class MainViewModel extends AndroidViewModel {
             loadMovies();
         }
 
-        // Favorite movies database
         database = FavMoviesDatabase.getInstance(application.getApplicationContext());
 
         entryList = database.favMovieDao().loadAllMovies();
@@ -116,11 +115,12 @@ public class MainViewModel extends AndroidViewModel {
                 .enqueue(new Callback<MoviePage>() {
                     @Override
                     public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
-                        Log.d(TAG, "lifecycle ViewModel onResponse: ");
                         if (response.isSuccessful()) {
 
-                            List<Movie> extractedMovies = response.body().getMovies();
-                            refreshCache(extractedMovies);
+                            if (response.body() != null) {
+                                List<Movie> extractedMovies = response.body().getMovies();
+                                refreshCache(extractedMovies);
+                            }
 
                         } else {
                             Log.d(TAG, "onResponse: response.code " + response.code());
@@ -156,14 +156,14 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
-    void refresh(List<FavMovieEntry> e ){
+    private void refresh(List<FavMovieEntry> e ){
 
         List<Movie> extractedMovies = convert(e);
         refreshCache(extractedMovies);
 
     }
 
-    void refreshCache(List<Movie> e ){
+    private void refreshCache(List<Movie> e ){
 
         if (e == null || e.isEmpty()) {
             return;

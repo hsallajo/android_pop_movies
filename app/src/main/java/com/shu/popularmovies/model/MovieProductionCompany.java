@@ -7,7 +7,7 @@ import org.parceler.Parcel;
 import org.parceler.ParcelProperty;
 
 @Parcel
-public class MovieProductionCompany {
+class MovieProductionCompany {
 
     @SerializedName("id")
     @Expose

@@ -7,7 +7,7 @@ import org.parceler.Parcel;
 import org.parceler.ParcelProperty;
 
 @Parcel
-public class MovieProductionCountry {
+class MovieProductionCountry {
 
     @SerializedName("iso_3166_1")
     @Expose

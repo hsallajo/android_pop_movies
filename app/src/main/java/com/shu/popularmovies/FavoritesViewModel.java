@@ -12,14 +12,13 @@ import androidx.lifecycle.LiveData;
 public class FavoritesViewModel extends AndroidViewModel {
     public static final String TAG = FavoritesViewModel.class.getSimpleName();
 
-    private LiveData<List<FavMovieEntry>> entries;
+    private final LiveData<List<FavMovieEntry>> entries;
 
-    FavMoviesDatabase database;
 
     public FavoritesViewModel(@NonNull Application application){
         super(application);
 
-        database = FavMoviesDatabase.getInstance(application.getApplicationContext());
+        final FavMoviesDatabase database = FavMoviesDatabase.getInstance(application.getApplicationContext());
         entries = database.favMovieDao().loadAllMovies();
     }
 

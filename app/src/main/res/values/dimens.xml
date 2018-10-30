@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="label_text_size">12sp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="header_text_size">12sp</dimen>
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_small">8dp</dimen>
-    <dimen name="margin_small">8dp</dimen>
-    <dimen name="padding_xsmall">4dp</dimen>
+    <dimen name="icon_xy">46dp</dimen>
+    <dimen name="header_height">180dp</dimen>
+    <dimen name="corner_radius">18dp</dimen>
 </resources>

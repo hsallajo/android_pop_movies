@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
     tools:context=".MovieDetailsActivity">
 
     <LinearLayout
@@ -12,137 +11,187 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/row0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_medium">
-
-            <TextView
-                android:id="@+id/movie_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:ellipsize="end"
-                android:gravity="center_horizontal"
-                android:maxLines="2"
-                android:paddingBottom="@dimen/padding_small"
-                tools:text="Avengers: Infinity War"
-                android:textSize="28sp" />
-
-            <TextView
-                android:id="@+id/release_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                tools:text="2018"
-                android:textSize="20sp" />
-        </LinearLayout>
-
         <FrameLayout
-            android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:paddingTop="@dimen/padding_medium"
-            android:paddingBottom="@dimen/padding_medium">
+            android:minHeight="@dimen/header_height"
+            android:gravity="bottom">
+
+            <ImageView
+                android:id="@+id/movie_backdrop_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryLight"
+                tools:ignore="ContentDescription"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="vertical">
+                android:id="@+id/row0"
+                style = "@style/DetailsScreenRow"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:id="@+id/movie_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:ellipsize="end"
+                    android:gravity="center_horizontal"
+                    android:maxLines="2"
+                    tools:text="Avengers: Infinity War"
+                    android:textSize="26sp"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/release_year"
+                    style="@style/Text14withBottomPadding"
+                    android:paddingBottom="0dp"
+                    android:textSize="20sp"
+                    android:layout_gravity="start"
+                    tools:text="2018" />
 
                 <ImageButton
                     android:id="@+id/btn_favorite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#00ffffff"
+                    android:layout_width="@dimen/icon_xy"
+                    android:layout_height="@dimen/icon_xy"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:onClick="onToggleStar"
                     app:srcCompat="@android:drawable/btn_star_big_off"
-                    android:onClick="onToggleStar"/>
+                    android:contentDescription="@string/toggle_favorite_button"/>
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:id="@+id/row1"
+            style = "@style/DetailsScreenRow"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="start"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_small">
+
+                <TextView
+                    android:id="@+id/original_name_label"
+                    style="@style/Caps12withBottomPadding"
+                    android:layout_gravity="start"
+                    android:text="@string/original_name_label"
+                    />
+
+                <TextView
+                    android:id="@+id/original_name"
+                    style="@style/Text16withBottomPadding"
+                    android:layout_gravity="start"
+                    tools:text="Avengers: Infinity War"
+                    android:paddingBottom="@dimen/padding_medium"
+                    />
 
                 <TextView
                     android:id="@+id/genre_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="@dimen/padding_small"
-                    android:text="@string/genre_label"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/label_text_size" />
+                    style="@style/Caps12withBottomPadding"
+                    android:layout_gravity="start"
+                    android:text="@string/genre_label" />
 
                 <TextView
                     android:id="@+id/genre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="@dimen/padding_small"
-                    tools:text="@string/str_genre_list_sample"
-                    android:textSize="16sp" />
+                    style="@style/Text16withBottomPadding"
+                    android:layout_gravity="start"
+                    tools:text="@string/str_genre_list_sample" />
 
-                <TextView
-                    android:id="@+id/language_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="@dimen/padding_small"
-                    android:text="@string/language_label"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/label_text_size" />
-
-                <TextView
-                    android:id="@+id/languages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    tools:text="en"
-                    android:textSize="16sp" />
             </LinearLayout>
 
-        </FrameLayout>
+            <View
+                style="@style/dividerVertical"/>
 
-        <!--This View serves as a visual divider between list items-->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style = "@style/VerticalPaddingSmall">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/release_date_label"
+                        style="@style/Caps12withBottomPadding"
+                        android:layout_gravity="start"
+                        android:text="@string/release_date_label" />
+
+                    <TextView
+                        android:id="@+id/release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingBottom="@dimen/padding_medium"
+                        tools:text="2018-09-09"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"/>
+
+                    <TextView
+                        android:id="@+id/language_label"
+                        style="@style/Caps12withBottomPadding"
+                        android:layout_gravity="start"
+                        android:text="@string/language_label" />
+
+                    <TextView
+                        android:id="@+id/languages"
+                        style="@style/Text16withBottomPadding"
+                        android:layout_gravity="start"
+                        tools:text="en" />
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:layout_marginRight="@dimen/margin_small"
-            android:background="#ffffff" />
+            style="@style/dividerHorizontal" />
 
         <LinearLayout
             android:id="@+id/row2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
+            style = "@style/DetailsScreenRow"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/padding_medium"
-            android:paddingBottom="@dimen/padding_medium"
             android:baselineAligned="false">
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:padding="@dimen/padding_small">
 
                 <ImageView
                     android:id="@+id/movie_poster_thumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:contentDescription="@string/movie_poster_image" />
+                    android:layout_height="174dp"
+                    android:adjustViewBounds="false"
+                    android:contentDescription="@string/movie_poster_image"
+                    android:scaleType="fitStart"
+                    tools:srcCompat="@tools:sample/avatars[3]" />
             </FrameLayout>
+
+            <View
+                style="@style/dividerVertical"/>
 
             <FrameLayout
                 android:id="@+id/movie_info_container_right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                style = "@style/VerticalPaddingSmall">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical">
@@ -150,58 +199,54 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="start"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:padding="@dimen/padding_small">
+                        android:paddingBottom="@dimen/padding_small"
+                        android:paddingTop="@dimen/padding_small">
 
                         <TextView
                             android:id="@+id/User_rating_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/Caps12withBottomPadding"
                             android:layout_gravity="center_horizontal"
-                            android:paddingBottom="@dimen/padding_small"
-                            android:text="@string/user_rating_label"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/label_text_size" />
+                            android:text="@string/user_rating_label" />
 
                         <TextView
                             android:id="@+id/user_rating"
-                            android:layout_width="46dp"
-                            android:layout_height="46dp"
+                            android:layout_width="@dimen/icon_xy"
+                            android:layout_height="@dimen/icon_xy"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/rating_circle"
                             android:gravity="center"
                             tools:text="8.3"
                             android:textColor="@android:color/white"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:fontFamily="sans-serif"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="start"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:padding="@dimen/padding_small">
+                        android:paddingBottom="@dimen/padding_small"
+                        android:paddingTop="@dimen/padding_small">
 
                         <TextView
                             android:id="@+id/user_votes_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:paddingBottom="@dimen/padding_small"
-                            android:text="@string/user_votes_label"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/label_text_size" />
+                            style="@style/Caps12withBottomPadding"
+                            android:layout_gravity="start"
+                            android:text="@string/user_votes_label" />
 
                         <TextView
                             android:id="@+id/user_votes"
                             android:layout_width="wrap_content"
-                            android:layout_height="46dp"
+                            android:layout_height="@dimen/icon_xy"
                             android:layout_gravity="center_horizontal"
                             tools:text="1676"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:fontFamily="sans-serif"/>
 
                     </LinearLayout>
 
@@ -211,35 +256,19 @@
 
         </LinearLayout>
 
-        <!--This View serves as a visual divider between list items-->
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:background="#ffffff" />
+            style="@style/dividerHorizontal" />
 
         <LinearLayout
             android:id="@+id/row3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/padding_small"
-            android:paddingRight="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_medium"
-            android:paddingBottom="@dimen/padding_medium">
+            style = "@style/VerticalPadding16">
 
             <TextView
                 android:id="@+id/movie_plot_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingBottom="@dimen/padding_small"
-                android:text="@string/movie_plot_label"
-                android:textAllCaps="true"
-                android:textSize="@dimen/label_text_size" />
+                style="@style/Caps12withBottomPadding"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/padding_small"
+                android:text="@string/movie_plot_label" />
 
             <TextView
                 android:id="@+id/movie_plot"
@@ -247,98 +276,36 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/padding_small"
                 android:textSize="@dimen/text_size_medium"
-                android:gravity="fill_horizontal" />
+                android:gravity="fill_horizontal"
+                android:fontFamily="sans-serif"/>
         </LinearLayout>
 
-        <!--This View serves as a visual divider between list items-->
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:background="#ffffff" />
+            style="@style/dividerHorizontal" />
 
         <LinearLayout
             android:id="@+id/row4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="@dimen/padding_small"
-            android:layout_marginEnd="@dimen/padding_small"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_medium"
-            android:paddingBottom="@dimen/padding_medium">
+            style = "@style/VerticalPadding16">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingBottom="@dimen/padding_medium"
-                android:text="@string/trailers_label"
-                android:textAllCaps="true"
-                android:textSize="@dimen/header_text_size" />
-
-            <TextView
-                android:id="@+id/original_name_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:paddingBottom="@dimen/padding_small"
-                android:text="@string/original_name_label"
-                android:textAllCaps="true"
-                android:textSize="@dimen/label_text_size" />
-
-            <TextView
-                android:id="@+id/original_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                tools:text="Avengers: Infinity War"
-                android:paddingBottom="@dimen/padding_medium"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/release_date_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:paddingBottom="@dimen/padding_small"
-                android:text="@string/release_date_label"
-                android:textAllCaps="true"
-                android:textSize="@dimen/label_text_size" />
-
-            <TextView
-                android:id="@+id/release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                tools:text="2018-09-09"
-                android:textSize="16sp" />
+                style="@style/Caps12withBottomPadding"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/trailers_label" />
 
         </LinearLayout>
 
+        <View
+            style="@style/dividerHorizontal" />
+
         <LinearLayout
             android:id="@+id/row5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_medium"
-            android:paddingBottom="@dimen/padding_medium">
+            style = "@style/VerticalPadding16">
 
             <TextView
                 android:id="@+id/tv_header_reviews"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingBottom="@dimen/padding_medium"
-                android:text="@string/str_header_movie_reviews"
-                android:textAllCaps="true"
-                android:textSize="@dimen/header_text_size" />
+                style="@style/Caps12withBottomPadding"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/str_header_movie_reviews" />
 
         </LinearLayout>
 
